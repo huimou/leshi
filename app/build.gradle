@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.1"
+    defaultConfig {
+        applicationId "com.wangjia.yijiale"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            // java.srcDirs = ['src/main/java','src/main/java/jniLibs']
+            java.srcDirs = ['src/main/java']
+            jniLibs.srcDirs = ['libs']
+            jni.srcDirs = []
+        }
+    }
+}
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    testCompile 'junit:junit:4.12'
+    compile fileTree(include: '*.jar', dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile('com.squareup.retrofit2:converter-simplexml:2.0.2') {
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:cardview-v7:24.1.1'
+    compile 'com.zhy:okhttputils:2.5.2'
+    //    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    compile files('libs/pinyin4j-2.5.0.jar')
+    compile files('libs/zxing.jar')
+    //百度地图的
+    //    compile files('libs/locSDK_6.13.jar')
+    //    compile files('libs/baidumapapi_map_v4_1_1.jar')
+    //    compile files('libs/baidumapapi_base_v4_1_1.jar')
+    //    compile files('libs/baidumapapi_search_v4_1_1.jar')
+    //    compile files('libs/baidumapapi_util_v4_1_1.jar')
+    //    compile files('libs/baidumapapi_cloud_v4_1_1.jar')
+    //    compile files('libs/baidumapapi_radar_v4_1_1.jar')
+    compile project(path: ':alertview')
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile files('libs/alipaySdk-20170407.jar')
+}

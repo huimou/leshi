@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_packager" />
+
+    <LinearLayout
+        android:id="@+id/my_set_adresschoose_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ListView
+            android:id="@+id/my_set_adresschoose_listview_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@null"
+            android:divider="@mipmap/button_line"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my_set_adresschoose_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/my_set_adresschoose_sheng_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="广东省"
+                android:textColor="@color/menber_icon_color"
+                android:textSize="@dimen/text_size_big" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_width"
+            android:background="@mipmap/button_line"/>
+        <ListView
+            android:id="@+id/my_set_adresschoose_listview_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@null"
+            android:layout_marginLeft="@dimen/space_20"
+            android:divider="@mipmap/button_line"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my_set_adresschoose_3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/my_set_adresschoose_sheng_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:text="广东省"
+                android:textColor="@color/menber_icon_color"
+                android:textSize="@dimen/text_size_big" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_width"
+            android:background="@mipmap/button_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/my_set_adresschoose_shi_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_marginTop="@dimen/titlepg_dp_10"
+                android:gravity="center_vertical"
+                android:text="广州市"
+                android:textColor="@color/titlebuilder_color"
+                android:textSize="@dimen/text_size_big" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_width"
+            android:background="@mipmap/button_line"/>
+        <ListView
+            android:id="@+id/my_set_adresschoose_listview_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:cacheColorHint="@null"
+            android:layout_marginLeft="@dimen/space_30"
+            android:divider="@mipmap/button_line"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+        </ListView>
+
+    </LinearLayout>
+</LinearLayout>

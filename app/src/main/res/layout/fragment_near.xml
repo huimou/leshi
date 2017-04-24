@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgColor">
+
+    <LinearLayout
+        android:id="@+id/confirm_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/title_packager" />
+
+    </LinearLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.wangjia.yijiale.menu.SelectMenuView
+        android:id="@+id/selectNearMenuView"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"/>
+
+    <com.wangjia.yijiale.recycle.PullLoadMoreRecyclerView
+        android:id="@+id/pullLoadMoreRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        />
+
+</LinearLayout>

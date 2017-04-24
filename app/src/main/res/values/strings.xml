@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">yijiale</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="load_more_text">正在加载...</string>
+    <string name="refresh">刷新</string>
+    <string name="scan_text">扫描</string>
+    <string name="receiving_p_name">收货人:</string>
+    <string name="contact_phone1">手机号码:</string>
+    <string name="contact_phone">11位手机号</string>
+    <string name="local_area">选择地址:</string>
+    <string name="local_yz">邮政编码:</string>
+    <string name="detail_address">详细地址:</string>
+    <string name="save">保存</string>
+    <string name="please_choice">地址信息</string>
+</resources>

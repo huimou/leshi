@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/ouka_products_addcart_bt"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:background="@color/red"
+        android:gravity="center"
+        android:text="加入购物车"
+        android:textColor="@color/white"
+        android:textSize="18sp" >
+    </Button>
+
+</LinearLayout>

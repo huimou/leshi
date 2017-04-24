@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_gray_shallow">
+    <include layout="@layout/title_packager"/>
+    <RadioGroup
+        android:id="@+id/order_top_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@color/text_gray_shallow"
+        android:layout_below="@+id/titlepg"
+        android:orientation="horizontal" >
+        <RadioButton
+            android:id="@+id/all_order"
+            style="@style/Order_RG"
+            android:text="全部订单"
+            android:checked="true"
+            android:drawableBottom="@drawable/main_line_selector"/>
+        <RadioButton
+            android:id="@+id/order_obligation"
+            style="@style/Order_RG"
+            android:text="待付款"
+            android:checked="false"
+            android:drawableBottom="@drawable/main_line_selector"/>
+        <RadioButton
+            android:id="@+id/order_goods_receipt"
+            style="@style/Order_RG"
+            android:text="待发货"
+            android:checked="false"
+            android:drawableBottom="@drawable/main_line_selector"/>
+        <RadioButton
+            android:id="@+id/order_evaluate"
+            style="@style/Order_RG"
+            android:text="待收货"
+            android:checked="false"
+            android:drawableBottom="@drawable/main_line_selector"/>
+        <RadioButton
+            android:id="@+id/order_has_returned"
+            style="@style/Order_RG"
+            android:text="已完成"
+            android:checked="false"
+            android:drawableBottom="@drawable/main_line_selector"/>
+    </RadioGroup>
+    <FrameLayout
+        android:id="@+id/order_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/order_top_tabs"
+          >
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View style="@style/driver_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="待付款"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="1sp"
+            android:layout_height="match_parent"
+            android:background="@color/driver_bg" />
+
+        <TextView
+            android:id="@+id/order_time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="4"
+            android:gravity="center_vertical"
+            android:text="2016-12-13 10：02：08" />
+    </LinearLayout>
+
+    <View style="@style/driver_line" />
+
+    <LinearLayout
+        android:id="@+id/order_pd_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--<include layout="@layout/item_order_pd_sub"/>
+        <include layout="@layout/item_order_pd_sub"/>-->
+    </LinearLayout>
+
+    <View style="@style/driver_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:id="@+id/tv_yh_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="¥ 10"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="总计："
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="¥ 10.0"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!-- 待付款 wait_pay-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:id="@+id/r_pay">
+            <Button
+                android:id="@+id/btn_go_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_normal"
+                android:text="去付款"
+                android:textColor="@color/white"
+                 />
+
+            <Button
+                android:id="@+id/btn_cancel_order"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="16dp"
+                android:layout_toLeftOf="@id/btn_go_pay"
+                android:background="@drawable/white_radius"
+                android:text="@string/cancel"
+                android:textColor="@color/black"
+                 />
+        </RelativeLayout>
+        <!-- 待发货 wait_send  无按钮布局-->
+        <!-- 待收货 wait_obtain-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:id="@+id/r_obtain">
+
+            <Button
+                android:id="@+id/btn_sure_obtain"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_normal"
+                android:text="确认收货"
+                android:textColor="@color/white"
+                 />
+
+            <Button
+                android:id="@+id/btn_go_see_way"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="16dp"
+                android:layout_toLeftOf="@id/btn_sure_obtain"
+                android:background="@drawable/white_radius"
+                android:text="查看物流"
+                android:textColor="@color/black"
+                 />
+        </RelativeLayout>
+        <!-- 待评价 wait_evaluate-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:id="@+id/r_evaluate">
+        <Button
+            android:id="@+id/btn_sure_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_normal"
+            android:text="评价订单"
+            android:textColor="@color/white"
+             />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

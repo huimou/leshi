@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
+	<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" >
+	    <TextView
+            android:id="@+id/my_set_adresschoose_textview"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/button_height"
+			android:textSize="@dimen/text_size_small"
+			android:textColor="@color/text_gray"
+            android:paddingLeft="@dimen/titlepg_dp_10"
+			android:paddingTop="@dimen/little_sapce"
+			android:paddingBottom="@dimen/little_sapce"
+            android:gravity="center_vertical"
+            android:text="广东省" />
+	</LinearLayout>
+</LinearLayout>

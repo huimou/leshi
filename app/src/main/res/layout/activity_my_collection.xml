@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_gray_shallow">
+    <include layout="@layout/title_packager"/>
+    <RadioGroup
+        android:id="@+id/order_top_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@color/text_gray_shallow"
+        android:layout_below="@+id/titlepg"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <RadioButton
+            android:id="@+id/all_order"
+            style="@style/Order_RG"
+            android:text="商家收藏"
+            android:checked="true"
+            android:drawableBottom="@drawable/main_line_selector"/>
+        <RadioButton
+            android:id="@+id/order_obligation"
+            style="@style/Order_RG"
+            android:text="商品收藏"
+            android:checked="false"
+            android:drawableBottom="@drawable/main_line_selector"/>
+
+    </RadioGroup>
+    <FrameLayout
+        android:id="@+id/order_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/order_top_tabs"
+          >
+    </FrameLayout>
+
+</RelativeLayout>

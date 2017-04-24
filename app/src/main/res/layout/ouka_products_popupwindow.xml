@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000" >
+
+    <RelativeLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/detail_pop_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="#ffffff"
+                android:padding="2dp"
+                android:src="@mipmap/ouka_products_pop_close" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:paddingLeft="120dp" >
+
+                <TextView
+                    android:id="@+id/detail_pop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxEms="8"
+                    android:maxLines="2"
+                    android:text=""
+                    android:textColor="#333333"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/detail_pop_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#FF3E47"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/detail_pop_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择规则"
+                    android:textColor="#bfbfbf"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="15dp"
+                android:background="#cccccc" />
+
+         <!--   <ScrollView
+                android:id="@+id/fh_address_sv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >-->
+
+                <LinearLayout
+                    android:id="@+id/fh_address_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/peisong_address_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="5dp" >
+
+                        <ListView
+                            android:id="@+id/send_address_nlv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="@null"
+                            />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detail_pop_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible" >
+                    </LinearLayout>
+                </LinearLayout>
+<!--            </ScrollView>-->
+
+            <View
+                android:id="@+id/detail_pop_line"
+                android:layout_width="fill_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="15dp"
+                android:background="#cccccc" />
+
+            <LinearLayout
+                android:id="@+id/skill_buy_ll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:visibility="visible"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="购买数量"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageButton
+                        android:id="@+id/detail_pop_minus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:src="@mipmap/ouka_products_pop_minus" />
+
+                    <TextView
+                        android:id="@+id/detail_pop_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@null"
+                        android:text="1"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <ImageButton
+                        android:id="@+id/detail_pop_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:src="@mipmap/ouka_products_pop_add" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/ouka_products_bottom2" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/detail_pop_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:background="#ffffff"
+            android:src="@mipmap/logo2" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

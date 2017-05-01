@@ -16,12 +16,17 @@ import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.adapter.GoodsDetailsAdapter;
+import com.wangjia.yijiale.entity.BaseBean;
 import com.wangjia.yijiale.entity.OrderDetails;
+import com.wangjia.yijiale.event.StatusBarEvent;
 import com.wangjia.yijiale.iview.OrderDetailsActivityView;
 import com.wangjia.yijiale.presenter.DetailsOrderDetailsPresenter;
 import com.wangjia.yijiale.presenter.impl.OrderActivityDetailsImpl;
+import com.wangjia.yijiale.utils.Constants;
 import com.wangjia.yijiale.utils.L;
+import com.wangjia.yijiale.utils.RxBus;
 import com.wangjia.yijiale.utils.Titlebulder;
+import com.wangjia.yijiale.utils.ToastUtils;
 import com.wangjia.yijiale.views.CustomProgress;
 import com.wangjia.yijiale.views.NoScrollRecycleView;
 import com.wangjia.yijiale.views.RoundAngleImageView;
@@ -30,6 +35,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 评论
@@ -78,6 +84,7 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
     GoodsDetailsAdapter adapter;
     private static final String TAG = "DetailOrderActivity";
     private String order_name;
+    private int store_desccredit = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,13 +130,39 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     if(checkedId == R.id.main_homeRadioBut){
                         //好评
+                        store_desccredit =5;
                     }else  if(checkedId == R.id.main_questionRadioBut){
                         //中评
+                        store_desccredit =4;
                     }else  if(checkedId == R.id.main_findRadioBut){
                         //差评
+                        store_desccredit =3;
                     }
                 }
             });
+        }
+    }
+
+    @Override
+    public void commentOrder(BaseBean getInfo) {
+        if(getInfo.getCode()== Constants.RESPONSE_SUCCESS){
+            RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
+            ToastUtils.showToast(CommentStoreActivity.this,getInfo.getMsg());
+            finish();
+        }
+    }
+
+    @OnClick({R.id.chaping_liyou_tv})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.chaping_liyou_tv:
+                //评论
+                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(),order_id,store_desccredit,5,5,5);
+
+                break;
+
+
+
         }
     }
 

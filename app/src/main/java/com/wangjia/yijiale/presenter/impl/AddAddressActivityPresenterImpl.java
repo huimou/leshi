@@ -34,10 +34,10 @@ public class AddAddressActivityPresenterImpl extends BasePresenterImpl implement
 
     @Override
     public void getData(String token, String true_name, String city_id, String area_id, String tel_phone,
-                        String is_default, String post_code, String address, String province_id) {
+                        String is_default, String post_code, String address, String province_id,String area_info) {
 //        view.showProgressDialog();
         Subscription s = BaseNoCacheRequest.getBaseApi().
-                address_add(token, true_name, city_id, area_id, tel_phone, is_default, post_code, address, province_id)
+                address_add(token, true_name, city_id, area_id, tel_phone, is_default, post_code, address, province_id,area_info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<AddAddress>() {
@@ -72,10 +72,10 @@ public class AddAddressActivityPresenterImpl extends BasePresenterImpl implement
      */
     @Override
     public void getUpdateAddress(String token,String address_id, String true_name, String city_id, String area_id,
-                                 String tel_phone, String is_default, String post_code, String address, String province_id) {
+                                 String tel_phone, String is_default, String post_code, String address, String province_id,String area_info) {
 //        view.showProgressDialog();
         Subscription s = BaseNoCacheRequest.getBaseApi().getUpdateAddress(token, address_id,true_name, city_id, area_id,
-                tel_phone, is_default, post_code, address, province_id)
+                tel_phone, is_default, post_code, address, province_id, area_info)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseBean>() {

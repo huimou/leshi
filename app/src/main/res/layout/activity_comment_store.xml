@@ -120,6 +120,7 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:button="@null"
+                    android:checked="false"
                     android:drawableTop="@drawable/zhongping_radio_selecter"
                     android:gravity="center"
                     android:text="中评"

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wangjia.yijiale.api.BaseNoCacheRequest;
+import com.wangjia.yijiale.entity.BaseBean;
 import com.wangjia.yijiale.entity.OrderDetails;
 import com.wangjia.yijiale.iview.OrderDetailsActivityView;
 import com.wangjia.yijiale.presenter.DetailsOrderDetailsPresenter;
@@ -26,7 +27,7 @@ public class OrderActivityDetailsImpl extends BasePresenterImpl implements Detai
     private CacheUtil mCacheUtil;
 
     public OrderActivityDetailsImpl(OrderDetailsActivityView orderDetailsActivityView, Context context) {
-        if (orderDetailsActivityView==null)
+        if (orderDetailsActivityView == null)
             throw new IllegalArgumentException("firstFragment must not be null");
         this.orderDetailsActivityView = orderDetailsActivityView;
         mCacheUtil = CacheUtil.get(context);
@@ -54,8 +55,39 @@ public class OrderActivityDetailsImpl extends BasePresenterImpl implements Detai
                     @Override
                     public void onNext(OrderDetails getInfo) {
                         orderDetailsActivityView.hidProgressDialog();
-                        orderDetailsActivityView.getData( getInfo);
+                        orderDetailsActivityView.getData(getInfo);
                         L.i(new Gson().toJson(getInfo));
+                        //mCacheUtil.put(Config.FirstFragment, new Gson().toJson(getVersion));
+                    }
+                });
+        addSubscription(s);
+    }
+
+    //评价订单
+    @Override
+    public void commentOrder(String token, int order_id, int store_desccredit, int store_servicecredit, int store_deliverycredit, int goods) {
+//        myOrderActivityView.showProgressDialog();
+        Subscription s = BaseNoCacheRequest.getBaseApi().commentOrder(token, order_id, store_desccredit, store_servicecredit, store_deliverycredit, goods)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseBean>() {
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        orderDetailsActivityView.hidProgressDialog();
+                        orderDetailsActivityView.showError(e.getMessage());
+                        Log.i("评价订单:", e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(BaseBean bean) {
+                        orderDetailsActivityView.hidProgressDialog();
+                        orderDetailsActivityView.commentOrder(bean);
+                        L.i("评价订单:",new Gson().toJson(bean));
                         //mCacheUtil.put(Config.FirstFragment, new Gson().toJson(getVersion));
                     }
                 });

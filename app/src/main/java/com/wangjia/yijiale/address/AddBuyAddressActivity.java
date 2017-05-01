@@ -120,10 +120,14 @@ public class AddBuyAddressActivity extends AppCompatActivity implements AddAddre
 
                             if (!addsId.equals("")) {//更新地址
                                 CustomProgress.showProgress(AddBuyAddressActivity.this, "修改中..", false, null);
-                                addAddressActivityPresenter.getUpdateAddress(YiApplication.getInstance().getToken(), addsId, consignee_name, shiId, quId, mobile, is_check, etContactYz.getText().toString().trim(), etDetailAddress.getText().toString().trim(), shengId);
+                                addAddressActivityPresenter.getUpdateAddress(YiApplication.getInstance().getToken(), addsId,
+                                        consignee_name, shiId, quId, mobile, is_check, etContactYz.getText().toString().trim(),
+                                        etDetailAddress.getText().toString().trim(), shengId,tvLocArea.getText().toString());
                             } else {
 //                                CustomProgress.showProgress(AddBuyAddressActivity.this, "加载中..", false, null);
-                                addAddressActivityPresenter.getData(YiApplication.getInstance().getToken(), consignee_name, shiId, quId, mobile, is_check, etContactYz.getText().toString().trim(), etDetailAddress.getText().toString().trim(), shengId);
+                                addAddressActivityPresenter.getData(YiApplication.getInstance().getToken(), consignee_name,
+                                        shiId, quId, mobile, is_check, etContactYz.getText().toString().trim(),
+                                        etDetailAddress.getText().toString().trim(), shengId,tvLocArea.getText().toString());
                             }
                         } else {
                             L.TShort(getBaseContext(), "请完整填写收货人资料");

@@ -105,6 +105,8 @@ public class StoreInActivity extends AppCompatActivity implements StoreInActivit
     public void store_id(BaseBean getInfo) {
         if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
             ToastUtils.showToast(StoreInActivity.this, getInfo.getMsg());
+        }else{
+            ToastUtils.showToast(StoreInActivity.this, getInfo.getMsg());
         }
     }
 
@@ -137,9 +139,8 @@ public class StoreInActivity extends AppCompatActivity implements StoreInActivit
                     return;
                 }
                 storeInActivityPresenter.getData(YiApplication.getInstance().getToken(), storeName.getText().toString(),
-                        tvLocArea.getText().toString(), detailAddressEditText.getText().toString(),
-                        contactsNameEt.getText().toString(), contactsPhoneEt.getText().toString(), "电子邮箱",
-                        contactsNameEt.getText().toString(), "身份证号", "手持身份证照片");
+                        tvLocArea.getText().toString() + detailAddressEditText.getText().toString(),
+                        contactsNameEt.getText().toString(), contactsPhoneEt.getText().toString());
                 //提交
                 break;
             case R.id.rl_loc_area:

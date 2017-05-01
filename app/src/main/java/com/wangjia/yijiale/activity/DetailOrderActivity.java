@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.adapter.GoodsDetailsAdapter;
+import com.wangjia.yijiale.entity.BaseBean;
 import com.wangjia.yijiale.entity.OrderDetails;
 import com.wangjia.yijiale.iview.OrderDetailsActivityView;
 import com.wangjia.yijiale.presenter.DetailsOrderDetailsPresenter;
@@ -123,6 +124,11 @@ public class DetailOrderActivity extends AppCompatActivity implements OrderDetai
             adapter = new GoodsDetailsAdapter(this,order_goods);
             rlView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void commentOrder(BaseBean getInfo) {
+
     }
 
     @Override

@@ -81,6 +81,13 @@ public interface BaseApi {
     @POST("mobileapp/index.php?act=apimember&op=member_order_detail")
     Observable<OrderDetails> myOrderDetails(@Field("token") String token, @Field("order_id") int order_id);
 
+    //评价订单
+    @FormUrlEncoded
+    @POST("mobileapp/index.php?act=member_evaluate&op=save")
+    Observable<BaseBean> commentOrder(@Field("token") String token, @Field("order_id") int order_id, @Field("store_desccredit") int store_desccredit,
+                                      @Field("store_servicecredit") int store_servicecredit, @Field("store_deliverycredit") int store_deliverycredit,
+                                      @Field("goods[*][score]") int goods);
+
     //会员充值下单
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_payment&op=recharge_add")
@@ -97,9 +104,9 @@ public interface BaseApi {
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_fund&op=pdcashadd")
     Observable<VipSubmitBean> vipTxApply(@Field("token") String token, @Field("pdc_amount") String pdc_amount,
-                                                @Field("pdc_bank_name") String pdc_bank_name,@Field("pdc_bank_no") String pdc_bank_no,
-                                           @Field("pdc_bank_user") String pdc_bank_user,@Field("pdc_bank_province") String pdc_bank_province,
-                                           @Field("pdc_bank_city") String pdc_bank_city);
+                                         @Field("pdc_bank_name") String pdc_bank_name, @Field("pdc_bank_no") String pdc_bank_no,
+                                         @Field("pdc_bank_user") String pdc_bank_user, @Field("pdc_bank_province") String pdc_bank_province,
+                                         @Field("pdc_bank_city") String pdc_bank_city);
 
 
     //登录
@@ -166,7 +173,7 @@ public interface BaseApi {
     Observable<NearStoreList> nearStoreList(@Field("lng") String lng, @Field("lat") String lat, @Field("sort") int sort,
                                             @Field("page_size") int page_size, @Field("sc_id") String sc_id,
                                             @Field("child_sc_id") String child_sc_id,
-                                            @Field("page_now") int page_now,@Field("province") String province,
+                                            @Field("page_now") int page_now, @Field("province") String province,
                                             @Field("city") String city);
 
 
@@ -193,7 +200,7 @@ public interface BaseApi {
     //收货地址列表
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_address&op=address_list")
-    Observable<AddressManageList> address_list(@Field("token") String token,@Field("just_default") int just_default);
+    Observable<AddressManageList> address_list(@Field("token") String token, @Field("just_default") int just_default);
 
     //获取确认订单数据
     @FormUrlEncoded
@@ -220,11 +227,11 @@ public interface BaseApi {
     //更改收货地址
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_address&op=address_edit")
-    Observable<BaseBean> getUpdateAddress(@Field("token") String token, @Field("address_id") String address_id,@Field("true_name") String true_name,
+    Observable<BaseBean> getUpdateAddress(@Field("token") String token, @Field("address_id") String address_id, @Field("true_name") String true_name,
                                           @Field("city_id") String city_id, @Field("area_id") String area_id,
                                           @Field("tel_phone") String tel_phone, @Field("is_default") String is_default,
                                           @Field("post_code") String post_code, @Field("address") String address,
-                                          @Field("province_id") String province_id);
+                                          @Field("province_id") String province_id, @Field("area_info") String area_info);
 
     //收货地址添加
     @FormUrlEncoded
@@ -233,16 +240,15 @@ public interface BaseApi {
                                        @Field("city_id") String city_id, @Field("area_id") String area_id,
                                        @Field("tel_phone") String tel_phone, @Field("is_default") String is_default,
                                        @Field("post_code") String post_code, @Field("address") String address,
-                                       @Field("province_id") String province_id);
+                                       @Field("province_id") String province_id, @Field("area_info") String area_info);
 
-    //个人商家入驻第二步接收店铺信息&身份证信息
+    //商家入驻-收集商家信息
     @FormUrlEncoded
-    @POST("mobileapp/index.php?act=store_joininc&op=step2")
+    @POST("mobileapp/index.php?act=apimember&op=_store_join_info")
     Observable<BaseBean> store_id(@Field("token") String token, @Field("company_name") String company_name,
-                                       @Field("company_address") String company_address, @Field("company_address_detail") String company_address_detail,
-                                       @Field("contacts_name") String contacts_name, @Field("contacts_phone") String contacts_phone,
-                                       @Field("contacts_email") String contacts_email, @Field("business_sphere") String business_sphere,
-                                       @Field("business_licence_number") String business_licence_number, @Field("business_licence_number_elcs") String business_licence_number_elc);
+                                   @Field("company_address_detail") String company_address_detail,
+                                  @Field("contacts_name") String contacts_name, @Field("contacts_phone") String contacts_phone
+                                 );
 
     //地区（省市区）
     @FormUrlEncoded
@@ -262,14 +268,14 @@ public interface BaseApi {
     //收藏店铺列表
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_favorites_store&op=favorites_list")
-    Observable<StoreCollectionList> StoreCollectionList(@Field("token") String token,  @Field("now_page") String now_page);
+    Observable<StoreCollectionList> StoreCollectionList(@Field("token") String token, @Field("now_page") String now_page);
 
     //商品列表
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=goods&op=store_goods_list")
     Observable<StoreGoodsList> store_goods_list(@Field("store_id") String store_id,
                                                 @Field("now_page") String now_page,
-                                                @Field("token") String token,@Field("page_num") int page_num);
+                                                @Field("token") String token, @Field("page_num") int page_num);
 
     //清空购物车
     @FormUrlEncoded
@@ -336,7 +342,7 @@ public interface BaseApi {
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=apimember&op=order_change_state")
     Observable<MyOrder> orderOperte(@Field("token") String token, @Field("order_id") String order_id,
-                                @Field("state_type") String state_type);
+                                    @Field("state_type") String state_type);
 
     /*//获取所有品牌
     @GET("ecmobile/?url=/home/brand")

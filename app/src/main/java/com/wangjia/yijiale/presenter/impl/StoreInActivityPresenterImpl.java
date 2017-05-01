@@ -32,13 +32,10 @@ public class StoreInActivityPresenterImpl extends BasePresenterImpl implements S
     }
 
     @Override
-    public void getData(String token, String company_name, String company_address, String company_address_detail, String contacts_name,
-                        String contacts_phone, String contacts_email, String business_sphere,
-                        String business_licence_number, String business_licence_number_elc) {
+    public void getData(String token, String company_name, String company_address_detail, String contacts_name, String contacts_phone) {
 //        view.showProgressDialog();
         Subscription s = BaseNoCacheRequest.getBaseApi().
-                store_id(token, company_name, company_address, company_address_detail, contacts_name, contacts_phone,
-                        contacts_email, business_sphere, business_licence_number, business_licence_number_elc)
+                store_id(token, company_name, company_address_detail, contacts_name, contacts_phone)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseBean>() {
@@ -52,14 +49,14 @@ public class StoreInActivityPresenterImpl extends BasePresenterImpl implements S
                     public void onError(Throwable e) {
                         view.hidProgressDialog();
                         view.showError(e.getMessage());
-                        Log.i("个人商家入驻第二步接收店铺信息&身份证信息：", e.getMessage());
+                        Log.i("商家入驻-收集商家信息：", e.getMessage());
                     }
 
                     @Override
                     public void onNext(BaseBean getInfo) {
                         view.hidProgressDialog();
                         view.store_id(getInfo);
-                        L.i("个人商家入驻第二步接收店铺信息&身份证信息：", new Gson().toJson(getInfo));
+                        L.i("商家入驻-收集商家信息：", new Gson().toJson(getInfo));
                         //mCacheUtil.put(Config.FirstFragment, new Gson().toJson(getVersion));
                     }
                 });

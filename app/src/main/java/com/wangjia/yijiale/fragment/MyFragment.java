@@ -29,7 +29,6 @@ import com.wangjia.yijiale.utils.CircleImageView;
 import com.wangjia.yijiale.utils.Constants;
 import com.wangjia.yijiale.utils.SPUtils;
 import com.wangjia.yijiale.utils.StringFunction;
-import com.wangjia.yijiale.utils.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -230,9 +229,8 @@ public class MyFragment extends Fragment {
         });
         if(StringFunction.isNotNull(SPUtils.get(getActivity(), Constants.TOKEN,"").toString())){
             user_name_tv.setText(SPUtils.get(getActivity(), Constants.RealName,"").toString());
-            Glide.with(getActivity()).load(Utils.getImageUrl(SPUtils.get(getActivity(), Constants.MEMBER_AVATAR,"").toString()))
-                    .placeholder(R.mipmap.logo)
-                    .into(headViewView);
+            String  so = SPUtils.get(getActivity(), Constants.MEMBER_AVATAR, "").toString();
+            Glide.with(getActivity()).load(so).into(headViewView);
         }else{
             user_name_tv.setText("未登录");
         }

@@ -14,6 +14,7 @@ import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.adapter.OrderAdapter;
 import com.wangjia.yijiale.entity.MyOrder;
+import com.wangjia.yijiale.entity.SubmitOrderBean;
 import com.wangjia.yijiale.event.StatusBarEvent;
 import com.wangjia.yijiale.iview.MyOrderActivityView;
 import com.wangjia.yijiale.presenter.MyOrderActivityPresenter;
@@ -141,6 +142,11 @@ public class OrderWaitPlayFragment extends Fragment implements MyOrderActivityVi
         }else{
             ToastUtils.showToast(getActivity(),getInfo.getMsg());
         }
+    }
+
+    @Override
+    public void orderSubmitPlay(SubmitOrderBean getInfo) {
+
     }
 
     @Override

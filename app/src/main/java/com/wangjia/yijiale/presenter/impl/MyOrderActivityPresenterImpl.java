@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.api.BaseNoCacheRequest;
 import com.wangjia.yijiale.entity.MyOrder;
+import com.wangjia.yijiale.entity.SubmitOrderBean;
 import com.wangjia.yijiale.iview.MyOrderActivityView;
 import com.wangjia.yijiale.presenter.MyOrderActivityPresenter;
 import com.wangjia.yijiale.utils.CacheUtil;
@@ -90,6 +92,40 @@ public class MyOrderActivityPresenterImpl extends BasePresenterImpl implements M
                         myOrderActivityView.orderOperte( getInfo);
                         L.i(new Gson().toJson(getInfo));
                         //mCacheUtil.put(Config.FirstFragment, new Gson().toJson(getVersion));
+                    }
+                });
+        addSubscription(s);
+    }
+
+
+    //订单确认支付
+    @Override
+    public void orderSubmitPlay(String ply_sn,String payment_method) {
+//        registerActivityView.showProgressDialog();
+        Subscription s = BaseNoCacheRequest
+                .getBaseApi()
+                .orderSubmitPlay(YiApplication.getInstance().getToken(),ply_sn,payment_method)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SubmitOrderBean>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        myOrderActivityView.hidProgressDialog();
+                        myOrderActivityView.showError(e.getMessage());
+                        Log.i("TAG", e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(SubmitOrderBean getInfo) {
+                        myOrderActivityView.hidProgressDialog();
+                        myOrderActivityView.orderSubmitPlay(getInfo);
+                        L.i(new Gson().toJson(getInfo));
                     }
                 });
         addSubscription(s);

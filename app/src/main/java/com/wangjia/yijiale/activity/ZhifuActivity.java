@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.entity.AboutBean;
@@ -115,7 +114,7 @@ public class ZhifuActivity extends AppCompatActivity implements RegisterActivity
                 // 构造PayTask 对象
                 PayTask alipay = new PayTask(ZhifuActivity.this);
                 // 调用支付接口，获取支付结果
-                String result = alipay.pay(payInfo, true);
+                String result = alipay.pay(payInfo);
 
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
@@ -209,7 +208,7 @@ public class ZhifuActivity extends AppCompatActivity implements RegisterActivity
     public void orderSubmitPlay(SubmitOrderBean submitOrderBean) {
         //确认订单
         if (submitOrderBean.getDatas() != null && submitOrderBean.getDatas().getAlipay_str() != null) {
-            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+//            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
             String s = htmlReplace(submitOrderBean.getDatas().getAlipay_str());
 //            String s= "alipay_sdk=alipay-sdk-php-20161101&app_id=2016080300159375&biz_content=%7B%22body%22%3A%22%E5%AE%9E%E7%89%A9%E8%AE%A2%E5%8D%95_140546133295366010%22%2C%22subject%22%3A+%22%E5%AE%9E%E7%89%A9%E8%AE%A2%E5%8D%95_140546133295366010%22%2C%22out_trade_no%22%3A+%22140546133295366010%22%2C%22passback_params%22%3A+%22order_type%253Dreal_order%22%2C%22timeout_express%22%3A+%2230m%22%2C%22total_amount%22%3A+%22309.00%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%7D&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=http%3A%2F%2Fcs.j.cqxueao.cn%2Fmobileapp%2Fapi%2Fpayment%2Falipayapp%2Fnotify_url.php&sign_type=RSA2&timestamp=2017-04-21+23%3A41%3A41&version=1.0&sign=TQwXHflj3v9gea50bWaSF7yBt3X8Dq6RJWce5qmCNgs6qDuaPX39R9Br512eSNoK6TDOiinbfTX76BS9FqHPbEIOstFHMjNZLwSTbwswwW%2F%2FqxIzcXdxSD03qZd71zU27dZc46bpeWgoi%2Fhujm%2F3BTGNDxdhGgsRIOxGeLEkpvjli9j%2Fc70PaIoKaYTDGJ7uMBBLCeACFH7ZlPmtEDsf%2BPbKpTwy5VcQ%2B2VB0nQ1BPK1Q55TvGeaRUCqdq87BcZg%2F1wHdnhLj4y3Yavn90q3BV7klArqZsHx%2FtLk1uOep8E7mHIWCKT4lZ3Wj%2Bnu%2FC%2BXlnafD4qtq38Dgy2KcDXtBQ%3D%3D";
             alipay(s);

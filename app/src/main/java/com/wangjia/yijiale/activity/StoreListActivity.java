@@ -19,7 +19,6 @@ import com.wangjia.yijiale.presenter.impl.HomeFragmentBannerPresenterImpl;
 import com.wangjia.yijiale.recycle.PullLoadMoreRecyclerView;
 import com.wangjia.yijiale.utils.Constants;
 import com.wangjia.yijiale.utils.Titlebulder;
-import com.wangjia.yijiale.utils.ToastUtils;
 import com.wangjia.yijiale.views.CustomProgress;
 
 import java.util.ArrayList;
@@ -260,7 +259,7 @@ public class StoreListActivity extends AppCompatActivity implements HomeFragment
                 } else {
                     child_sc_id = 0;
                 }
-                ToastUtils.showToast(StoreListActivity.this, sc_id + "--" + child_sc_id);
+//                ToastUtils.showToast(StoreListActivity.this, sc_id + "--" + child_sc_id);
                 homeFragmentBannerPresenter.nearStoreList("", "", sort, page_size, String.valueOf(sc_id)
                         , String.valueOf(child_sc_id), mCount, area_name, child_area_name);
             }
@@ -271,7 +270,7 @@ public class StoreListActivity extends AppCompatActivity implements HomeFragment
                 sort = Integer.parseInt(sortType);
                 homeFragmentBannerPresenter.nearStoreList("", "", sort, page_size, String.valueOf(sc_id)
                         , String.valueOf(child_sc_id), mCount, area_name, child_area_name);
-                ToastUtils.showToast(StoreListActivity.this, sort + "");
+//                ToastUtils.showToast(StoreListActivity.this, sort + "");
             }
 
             @Override
@@ -287,7 +286,7 @@ public class StoreListActivity extends AppCompatActivity implements HomeFragment
                 } else {
                     child_area_name = "";
                 }
-                ToastUtils.showToast(StoreListActivity.this, area_name + "--" + child_area_name);
+//                ToastUtils.showToast(StoreListActivity.this, area_name + "--" + child_area_name);
                 homeFragmentBannerPresenter.nearStoreList("", "", sort, page_size, String.valueOf(sc_id)
                         , String.valueOf(child_sc_id), mCount, area_name, child_area_name);
             }

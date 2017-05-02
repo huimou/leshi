@@ -85,7 +85,11 @@ public class OrderAdapter extends RecyclerView.Adapter {
             viewHolder.tvPay.setText("删除订单");
             viewHolder.tvPay.setVisibility(View.VISIBLE);
             viewHolder.tvCanlePay.setVisibility(View.GONE);
-            viewHolder.tv_dicus.setVisibility(View.VISIBLE);
+            if (datasBean.getEvaluation_state() == 0) {
+                viewHolder.tv_dicus.setVisibility(View.VISIBLE);
+            }else{
+                viewHolder.tv_dicus.setVisibility(View.GONE);
+            }
         } else if (datasBean.getOrder_state() == 10) {//待付款
             viewHolder.tvPay.setVisibility(View.VISIBLE);
             viewHolder.tvCanlePay.setVisibility(View.VISIBLE);

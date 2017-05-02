@@ -366,7 +366,12 @@ public class GoodsDetailActivity extends AppCompatActivity implements CartCartWi
                 if (goods_image != null) {
                     setLoopView(goods_image);
                 }
-                choose_cat_strings = new String[model.getDatas().getGoods_info().getSpec_value().size()];
+                if(model.getDatas().getGoods_info()!=null && model.getDatas().getGoods_info().getSpec_value()!=null
+                        && model.getDatas().getGoods_info().getSpec_value().size()>0) {
+                    choose_cat_strings = new String[model.getDatas().getGoods_info().getSpec_value().size()];
+                }else{
+                    choose_cat_strings = new String[0];
+                }
                 if (StringFunction.isNotNull(model.getDatas().getGoods_info())) {
                     goodsNameTv.setText(model.getDatas().getGoods_info().getGoods_name());
                     goodsPriceTv.setText("￥ " + model.getDatas().getGoods_info().getGoods_price() + "元");

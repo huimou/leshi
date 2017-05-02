@@ -7,6 +7,7 @@ package com.wangjia.yijiale.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
@@ -125,7 +127,7 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
         icCard.setText(String.valueOf(SPUtils.get(UpdateZlActivity.this, Constants.CardNum, "")));
 
         String s_avatar = SPUtils.get(UpdateZlActivity.this, Constants.MEMBER_AVATAR, "").toString();
-        if(StringFunction.isNotNull(s_avatar)) {
+        if (StringFunction.isNotNull(s_avatar)) {
             Glide.with(this).load(s_avatar).into(userHeadCiv);
         }
 
@@ -176,37 +178,42 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
 
     @OnClick({R.id.info_save, R.id.user_head_civ})
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.info_save:
-                if (my_file_list.size() == 1) {
-                    updateZlActivityPresenter.getData(my_file_list.get(0), sex, Integer.parseInt(age.getText().toString()),
-                            icCard.getText().toString(), realName.getText().toString(), nichen.getText().toString());
-                } else {
-                    updateZlActivityPresenter.getData(null, sex, Integer.parseInt(age.getText().toString()),
-                            icCard.getText().toString(), realName.getText().toString(), nichen.getText().toString());
-                }
-                break;
-            case R.id.user_head_civ:
-                if (mAlertView == null) {
-                    mAlertView = new AlertView("更换头像", null, "取消", null,
-                            new String[]{"拍照", "从相册选取"},
-                            this, AlertView.Style.ActionSheet, new OnItemClickListener() {
-                        @Override
-                        public void onItemClick(Object v, int position) {
+        try {
+            switch (view.getId()) {
+                case R.id.info_save:
+                    uploadImage();
+//                    if (my_file_list.size() == 1) {
+//                        updateZlActivityPresenter.getData(my_file_list.get(0), sex, Integer.parseInt(age.getText().toString()),
+//                                icCard.getText().toString(), realName.getText().toString(), nichen.getText().toString());
+//                    } else {
+//                        updateZlActivityPresenter.getData(null, sex, Integer.parseInt(age.getText().toString()),
+//                                icCard.getText().toString(), realName.getText().toString(), nichen.getText().toString());
+//                    }
+                    break;
+                case R.id.user_head_civ:
+                    if (mAlertView == null) {
+                        mAlertView = new AlertView("更换头像", null, "取消", null,
+                                new String[]{"拍照", "从相册选取"},
+                                this, AlertView.Style.ActionSheet, new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Object v, int position) {
 
-                            if (position == 0) {//拍照
-                                takeAPicture();
-                            } else if (position == 1) {//相册选择
-                                selectPicture();
-                            } else {//取消
-                                mAlertView.dismiss();
+                                if (position == 0) {//拍照
+                                    takeAPicture();
+                                } else if (position == 1) {//相册选择
+                                    selectPicture();
+                                } else {//取消
+                                    mAlertView.dismiss();
+                                }
+
                             }
-
-                        }
-                    });
-                }
-                mAlertView.show();
-                break;
+                        });
+                    }
+                    mAlertView.show();
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -224,8 +231,20 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                                 .with(UpdateZlActivity.this)
                                 .load(newPhoto)
                                 .into(userHeadCiv);
-                        my_file_list.add(newPhoto);
-                        uploadImage(newPhoto.getAbsolutePath());
+//                        my_file_list.add(newPhoto);
+                        Bitmap bitmap = BitmapFactory.decodeFile(newPhoto.getPath(), getBitmapOption(2));
+                        File filess = new File(getExternalCacheDir(), YiApplication.TEMP_FILE_NAME);
+                        if (!filess.exists()) {
+                            filess.mkdirs();
+                        }
+                        capturePath = filess.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".jpg";
+                        ImageUtil.saveBitMap(bitmap, capturePath);
+//                        CustomProgress.showProgress(UpdateZlActivity.this, "上传头像中...", false, null);
+                        mUplodImageProgressDialog = KProgressHUD.create(this)
+                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                .setCancellable(true)
+                                .setLabel("正在加载...");
+                        uploadImage(capturePath);
                         break;
                     case KITKAT_ABOVE://4.4以上
                         uri = data.getData();
@@ -260,9 +279,73 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
             }
     }
 
+
+//    Bitmap bitmap= BitmapFactory.decodeFile(filePath);
+
+//    如果图片过大，可能导致Bitmap对象装不下图片
+//    解决办法：
+//    String filePath=”c:/01.jpg”;
+//    Bitmap bitmap=BitmapFactory.decodeFile(filePath,getBitmapOption(2)); //将图片的长和宽缩小味原来的1/2
+
+    private BitmapFactory.Options getBitmapOption(int inSampleSize) {
+        System.gc();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPurgeable = true;
+        options.inSampleSize = inSampleSize;
+        return options;
+    }
+
+
     private void uploadImage(String thePath) {
         OkHttpUtils.post().url(Config.URI + "mobileapp/index.php?act=apimember&op=upMemberInFo")
                 .addFile("member_avatar", "useravater.jpg", new File(thePath))
+                .addParams("token", YiApplication.getInstance().getToken())
+                .addParams("member_sex", sex + "")
+                .addParams("member_age", age.getText().toString())
+                .addParams("member_idcard", icCard.getText().toString())
+                .addParams("member_truename", realName.getText().toString())
+                .addParams("member_nickname", nichen.getText().toString())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+                        L.e("上传失败！");
+//                        CustomProgress.dissmiss();
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+//                            CustomProgress.dissmiss();
+                            Login model = new Gson().fromJson(response, Login.class);
+                            if (model.getDatas() == null) {
+                                return;
+                            }
+                            if (model.getDatas().getMember_avatar() != null) {
+                                L.e("上传成功！" + model.getDatas().getMember_avatar());
+                            }else{
+                                L.e("上传成功！" + model.getMsg());
+                            }
+
+                            SPUtils.put(UpdateZlActivity.this, Constants.NiChen, model.getDatas().getMember_nickname());
+                            SPUtils.put(UpdateZlActivity.this, Constants.Sex, model.getDatas().getMember_sex());
+                            SPUtils.put(UpdateZlActivity.this, Constants.Age, model.getDatas().getMember_age());
+                            SPUtils.put(UpdateZlActivity.this, Constants.RealName, model.getDatas().getMember_truename());
+                            SPUtils.put(UpdateZlActivity.this, Constants.CardNum, model.getDatas().getMember_idcard());
+                            SPUtils.put(UpdateZlActivity.this, Constants.MEMBER_AVATAR, model.getDatas().getMember_avatar());
+//                        finish();
+                        } catch (JsonSyntaxException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+    }
+
+
+    private void uploadImage() {
+        OkHttpUtils.post().url(Config.URI + "mobileapp/index.php?act=apimember&op=upMemberInFo")
                 .addParams("token", YiApplication.getInstance().getToken())
                 .addParams("member_sex", sex + "")
                 .addParams("member_age", age.getText().toString())
@@ -279,7 +362,7 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                     @Override
                     public void onResponse(String response) {
                         Login model = new Gson().fromJson(response, Login.class);
-                        if(model.getDatas()==null){
+                        if (model.getDatas() == null) {
                             return;
                         }
                         SPUtils.put(UpdateZlActivity.this, Constants.NiChen, model.getDatas().getMember_nickname());
@@ -288,8 +371,8 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                         SPUtils.put(UpdateZlActivity.this, Constants.RealName, model.getDatas().getMember_truename());
                         SPUtils.put(UpdateZlActivity.this, Constants.CardNum, model.getDatas().getMember_idcard());
                         SPUtils.put(UpdateZlActivity.this, Constants.MEMBER_AVATAR, model.getDatas().getMember_avatar());
-//                        finish();
-                        L.e("上传成功！" + model.getDatas().getMember_avatar());
+                        finish();
+//                        L.e("上传成功！" + model.getDatas().getMember_avatar());
                     }
                 });
     }
@@ -379,4 +462,11 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
     public void showError(String error) {
         CustomProgress.dissmiss();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CustomProgress.dissmiss();
+    }
 }
+

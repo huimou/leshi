@@ -63,6 +63,15 @@ public class MyOrder {
         private String add_time;
         private String order_amount;
         private int order_id;
+        private int evaluation_state;
+
+        public int getEvaluation_state() {
+            return evaluation_state;
+        }
+
+        public void setEvaluation_state(int evaluation_state) {
+            this.evaluation_state = evaluation_state;
+        }
 
         public String getOrder_sn() {
             return order_sn;

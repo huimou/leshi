@@ -228,7 +228,7 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
     }
 
     @Override
-    public void submitOrderForOnce(SubmitSteOneBean getInfo) {
+    public void submitOrderForOnce(final SubmitSteOneBean getInfo) {
         submitSteOneBean = getInfo;
         if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
             //地址
@@ -256,6 +256,20 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
             ConfirmListViewAdapter confirmListViewAdapter = new ConfirmListViewAdapter(ConfirmOrderActivity.this,
                     getInfo.getDatas().getStore_cart_list().get(0).getGoods_list());
             goodsNorv.setAdapter(confirmListViewAdapter);
+            confirmListViewAdapter.setmOnItemClickListener(new ConfirmListViewAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int postion) {
+                    Intent intent = new Intent(ConfirmOrderActivity.this, GoodsDetailActivity.class);
+                    intent.putExtra("goods_id", getInfo.getDatas().getStore_cart_list().get(0).getGoods_list().get(postion).getGoods_id());
+                    intent.putExtra("store_id", String.valueOf(getInfo.getDatas().getStore_cart_list().get(0).getGoods_list().get(postion).getStore_id()));
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onItemLongClick(View view, int postion) {
+
+                }
+            });
             has_buy_num_tv.setText("共" + getInfo.getDatas().getStore_cart_list().get(0).getGoods_list().size() +
                     "件商品 小计：￥" + getInfo.getDatas().getOrder_amount());
             priceTotleTv.setText("￥" + getInfo.getDatas().getOrder_amount());

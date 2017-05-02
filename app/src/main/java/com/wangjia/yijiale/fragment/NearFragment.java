@@ -22,7 +22,6 @@ import com.wangjia.yijiale.menu.SelectMenuView;
 import com.wangjia.yijiale.presenter.impl.HomeFragmentBannerPresenterImpl;
 import com.wangjia.yijiale.recycle.PullLoadMoreRecyclerView;
 import com.wangjia.yijiale.utils.Titlebulder;
-import com.wangjia.yijiale.utils.ToastUtils;
 import com.wangjia.yijiale.views.CustomProgress;
 
 import java.util.ArrayList;
@@ -152,7 +151,7 @@ public class NearFragment extends Fragment implements HomeFragmentBannerView {
                     }else{
                         child_sc_id = 0;
                     }
-                    ToastUtils.showToast(getActivity(),sc_id+"--"+child_sc_id);
+//                    ToastUtils.showToast(getActivity(),sc_id+"--"+child_sc_id);
                     homeFragmentBannerPresenter.nearStoreList(YiApplication.getLongitude(), YiApplication.getLatitude()
                             ,sort, page_size,String.valueOf(sc_id),String.valueOf(child_sc_id), mCount,"","");
                 } catch (Exception e) {
@@ -164,7 +163,7 @@ public class NearFragment extends Fragment implements HomeFragmentBannerView {
             public void onSortChanged(String sortType) {
                     //智能查找
                 sort = Integer.parseInt(sortType);
-                ToastUtils.showToast(getActivity(),sort+"--");
+//                ToastUtils.showToast(getActivity(),sort+"--");
                 homeFragmentBannerPresenter.nearStoreList(YiApplication.getLongitude(), YiApplication.getLatitude()
                         ,sort, page_size,String.valueOf(sc_id)
                         ,String.valueOf(child_sc_id), mCount,"","");

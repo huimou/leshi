@@ -15,6 +15,7 @@ import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.activity.CommentStoreActivity;
 import com.wangjia.yijiale.adapter.OrderAdapter;
 import com.wangjia.yijiale.entity.MyOrder;
+import com.wangjia.yijiale.entity.SubmitOrderBean;
 import com.wangjia.yijiale.event.StatusBarEvent;
 import com.wangjia.yijiale.iview.MyOrderActivityView;
 import com.wangjia.yijiale.presenter.MyOrderActivityPresenter;
@@ -148,6 +149,11 @@ public class OrderSalesReturnFragment extends Fragment implements MyOrderActivit
         } else {
             ToastUtils.showToast(getActivity(), getInfo.getMsg());
         }
+    }
+
+    @Override
+    public void orderSubmitPlay(SubmitOrderBean getInfo) {
+
     }
 
     @Override

@@ -88,7 +88,7 @@ public class NearFragment extends Fragment implements HomeFragmentBannerView {
                 @Override
                 public void onItemClick(View view, int postion, NearStoreList.DatasBean bean) {
                     tIntent = new Intent(getActivity(), DetailActivity.class);
-//                    tIntent.putExtra("store_id", bean.getStore_id());
+                    tIntent.putExtra("store_id", bean.getStore_id());
                     startActivity(tIntent);
                 }
 

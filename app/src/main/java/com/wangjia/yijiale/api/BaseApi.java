@@ -91,7 +91,7 @@ public interface BaseApi {
     //会员充值下单
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_payment&op=recharge_add")
-    Observable<VipSubmitBean> vipSubmitOrder(@Field("token") String token, @Field("pdr_amount") String pdr_amount,
+    Observable<SubmitOrderBean> vipSubmitOrder(@Field("token") String token, @Field("pdr_amount") String pdr_amount,
                                              @Field("payment_method") String payment_method);
 
     //订单确认支付

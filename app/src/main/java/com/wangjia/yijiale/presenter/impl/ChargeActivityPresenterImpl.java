@@ -8,7 +8,6 @@ import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.api.BaseNoCacheRequest;
 import com.wangjia.yijiale.entity.ShowVipBean;
 import com.wangjia.yijiale.entity.SubmitOrderBean;
-import com.wangjia.yijiale.entity.VipSubmitBean;
 import com.wangjia.yijiale.entity.ZhifuShiWuBean;
 import com.wangjia.yijiale.iview.ChargeActivityView;
 import com.wangjia.yijiale.presenter.ChargeActivityPresenter;
@@ -78,7 +77,7 @@ public class ChargeActivityPresenterImpl extends BasePresenterImpl implements Ch
                 .vipSubmitOrder(YiApplication.getInstance().getToken(), pdr_amount,payment_method)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<VipSubmitBean>() {
+                .subscribe(new Observer<SubmitOrderBean>() {
 
                     @Override
                     public void onCompleted() {
@@ -93,7 +92,7 @@ public class ChargeActivityPresenterImpl extends BasePresenterImpl implements Ch
                     }
 
                     @Override
-                    public void onNext(VipSubmitBean bean) {
+                    public void onNext(SubmitOrderBean bean) {
                         registerActivityView.hidProgressDialog();
                         registerActivityView.vipSubmitOrder(bean);
                         L.i(new Gson().toJson(bean));

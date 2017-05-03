@@ -85,7 +85,7 @@ public class OrderHasNoPayFragment extends Fragment implements MyOrderActivityVi
             public void onPayClick(View view, int postion, MyOrder.DatasBean bean) {
                 //付款
                 // TODO: 2017/4/23
-
+                myOrderActivityPresenter.orderSubmitPlay(bean.getOrder_sn(), "alipay");
             }
 
             @Override

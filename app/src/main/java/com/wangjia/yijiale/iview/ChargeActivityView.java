@@ -2,7 +2,6 @@ package com.wangjia.yijiale.iview;
 
 import com.wangjia.yijiale.entity.ShowVipBean;
 import com.wangjia.yijiale.entity.SubmitOrderBean;
-import com.wangjia.yijiale.entity.VipSubmitBean;
 import com.wangjia.yijiale.entity.ZhifuShiWuBean;
 
 /**
@@ -14,7 +13,7 @@ public interface ChargeActivityView extends BaseView {
 
     void orderSubmitPlay(SubmitOrderBean getInfo);
 
-    void vipSubmitOrder(VipSubmitBean getInfo);
+    void vipSubmitOrder(SubmitOrderBean getInfo);
 
     void shiwuOrder(ZhifuShiWuBean getInfo);
 }

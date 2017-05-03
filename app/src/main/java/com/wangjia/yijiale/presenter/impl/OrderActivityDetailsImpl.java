@@ -67,7 +67,8 @@ public class OrderActivityDetailsImpl extends BasePresenterImpl implements Detai
     @Override
     public void commentOrder(String token, int order_id, int store_desccredit, int store_servicecredit, int store_deliverycredit, int goods) {
 //        myOrderActivityView.showProgressDialog();
-        Subscription s = BaseNoCacheRequest.getBaseApi().commentOrder(token, order_id, store_desccredit, store_servicecredit, store_deliverycredit, goods)
+        Subscription s = BaseNoCacheRequest.getBaseApi().commentOrder(token, order_id, store_desccredit,
+                store_servicecredit, store_deliverycredit, goods)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<BaseBean>() {

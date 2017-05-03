@@ -230,7 +230,11 @@ public class MyFragment extends Fragment {
         if(StringFunction.isNotNull(SPUtils.get(getActivity(), Constants.TOKEN,"").toString())){
             user_name_tv.setText(SPUtils.get(getActivity(), Constants.RealName,"").toString());
             String  so = SPUtils.get(getActivity(), Constants.MEMBER_AVATAR, "").toString();
-            Glide.with(getActivity()).load(so).into(headViewView);
+            if(StringFunction.isNotNull(so)) {
+                Glide.with(getActivity()).load(so).into(headViewView);
+            }else{
+                Glide.with(getActivity()).load(R.mipmap.my).into(headViewView);
+            }
         }else{
             user_name_tv.setText("未登录");
         }

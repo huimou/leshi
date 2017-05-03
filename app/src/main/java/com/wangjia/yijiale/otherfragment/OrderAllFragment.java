@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
+import com.wangjia.yijiale.activity.CommentStoreActivity;
 import com.wangjia.yijiale.adapter.OrderAdapter;
 import com.wangjia.yijiale.entity.MyOrder;
 import com.wangjia.yijiale.entity.PayResult;
@@ -122,7 +123,11 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
 
             @Override
             public void onCommentClick(View view, int postion, MyOrder.DatasBean bean) {
-
+                //评论商家
+                Intent intent = new Intent(getActivity(), CommentStoreActivity.class);
+                intent.putExtra("order_id",bean.getOrder_id());
+                intent.putExtra("order_name",bean.getStore_name());
+                startActivity(intent);
             }
 
             @Override

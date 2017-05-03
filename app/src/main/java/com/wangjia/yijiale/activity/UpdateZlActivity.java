@@ -27,6 +27,7 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
@@ -100,6 +101,7 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
     private int sex = 0;
     private UpdateZlActivityPresenter updateZlActivityPresenter;
     private List<File> my_file_list = new ArrayList<>();
+    private KProgressHUD mUplodImageProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +158,11 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                         finish();
                     }
                 });
+
+        mUplodImageProgressDialog = KProgressHUD.create(this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(true)
+                .setLabel("上传头像中...");
 
         sexRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -239,11 +246,7 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                         }
                         capturePath = filess.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".jpg";
                         ImageUtil.saveBitMap(bitmap, capturePath);
-//                        CustomProgress.showProgress(UpdateZlActivity.this, "上传头像中...", false, null);
-                        mUplodImageProgressDialog = KProgressHUD.create(this)
-                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                                .setCancellable(true)
-                                .setLabel("正在加载...");
+                        mUplodImageProgressDialog.show();
                         uploadImage(capturePath);
                         break;
                     case KITKAT_ABOVE://4.4以上
@@ -262,6 +265,7 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                                         .load(new File(capturePath))
                                         .into(userHeadCiv);
                                 my_file_list.add(new File(capturePath));
+                                mUplodImageProgressDialog.show();
                                 uploadImage(capturePath);
                             }
                         } else {
@@ -270,6 +274,7 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                                     .load(new File(thePath))
                                     .into(userHeadCiv);
                             my_file_list.add(new File(thePath));
+                            mUplodImageProgressDialog.show();
                             uploadImage(thePath);
                         }
                         break;
@@ -310,14 +315,14 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                     @Override
                     public void onError(Call call, Exception e) {
                         L.e("上传失败！");
-//                        CustomProgress.dissmiss();
+                        mUplodImageProgressDialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String response) {
 
                         try {
-//                            CustomProgress.dissmiss();
+                            mUplodImageProgressDialog.dismiss();
                             Login model = new Gson().fromJson(response, Login.class);
                             if (model.getDatas() == null) {
                                 return;
@@ -327,7 +332,6 @@ public class UpdateZlActivity extends AppCompatActivity implements UpdateZlActiv
                             }else{
                                 L.e("上传成功！" + model.getMsg());
                             }
-
                             SPUtils.put(UpdateZlActivity.this, Constants.NiChen, model.getDatas().getMember_nickname());
                             SPUtils.put(UpdateZlActivity.this, Constants.Sex, model.getDatas().getMember_sex());
                             SPUtils.put(UpdateZlActivity.this, Constants.Age, model.getDatas().getMember_age());

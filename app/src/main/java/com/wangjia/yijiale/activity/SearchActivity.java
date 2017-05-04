@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.adapter.SearchStoreViewAdapter;
@@ -31,14 +30,14 @@ public class SearchActivity extends AppCompatActivity implements SearchActivityV
 
     @Bind(R.id.et_search)
     EditText etSearch;
-    @Bind(R.id.iv_delete_search)
-    ImageView ivDeleteSearch;
-    @Bind(R.id.tv_search)
-    TextView tvSearch;
-    @Bind(R.id.top_search)
-    LinearLayout topSearch;
     @Bind(R.id.search_pullLoadMoreRecyclerView)
     PullLoadMoreRecyclerView searchPullLoadMoreRecyclerView;
+    @Bind(R.id.imageView3)
+    ImageView imageView3;
+    @Bind(R.id.search_ll)
+    LinearLayout searchLl;
+    @Bind(R.id.top_search)
+    LinearLayout topSearch;
     private SearchActivityPresenter searchActivityPresenter;
     private Intent i;
     private SearchStoreViewAdapter searchStoreViewAdapter;
@@ -46,7 +45,7 @@ public class SearchActivity extends AppCompatActivity implements SearchActivityV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_store_search);
         i = new Intent();
         ButterKnife.bind(this);
         initData();
@@ -55,7 +54,7 @@ public class SearchActivity extends AppCompatActivity implements SearchActivityV
 
     public void initData() {
         searchActivityPresenter = new SearchActivityPresenterImpl(this, SearchActivity.this);
-        searchActivityPresenter.getData(1,etSearch.getText().toString(),"","");
+        searchActivityPresenter.getData(1, etSearch.getText().toString(), "", "");
     }
 
     public void initView() {
@@ -74,13 +73,6 @@ public class SearchActivity extends AppCompatActivity implements SearchActivityV
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                if (s.length() > 0) {
-                    ivDeleteSearch.setVisibility(View.VISIBLE);
-//                    tvSearch.setText("搜索");
-                } else {
-                    ivDeleteSearch.setVisibility(View.INVISIBLE);
-//                    tvSearch.setText("取消");
-                }
             }
 
             @Override
@@ -118,7 +110,7 @@ public class SearchActivity extends AppCompatActivity implements SearchActivityV
                 @Override
                 public void onItemClick(View view, int postion) {
                     Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
-                    intent.putExtra("store_id",model.getDatas().getStore_list().get(postion).getStore_id());
+                    intent.putExtra("store_id", model.getDatas().getStore_list().get(postion).getStore_id());
                     startActivity(intent);
                 }
 
@@ -148,14 +140,11 @@ public class SearchActivity extends AppCompatActivity implements SearchActivityV
         CustomProgress.dissmiss();
     }
 
-    @OnClick({R.id.iv_delete_search, R.id.tv_search})
+    @OnClick({ R.id.search_ll})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_delete_search:
-                etSearch.setText("");
-                break;
-            case R.id.tv_search:
-                searchActivityPresenter.getData(1,etSearch.getText().toString(),"","");
+            case R.id.search_ll:
+                searchActivityPresenter.getData(1, etSearch.getText().toString(), "", "");
                 break;
         }
     }

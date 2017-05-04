@@ -102,21 +102,26 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
             @Override
             public void onPayClick(View view, int postion, MyOrder.DatasBean bean) {
                 //确认收货 ，付款
-                if (bean.getOrder_state() == 0) {
-                    //已完成，就是只有删除订单
+                if (bean.getOrder_state() == 1) {
+                    //已取消，就是只有删除订单
                     myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_delete");
                 }else if(bean.getOrder_state() == 10) {
                     //待付款，有取消按钮，和 去付款按钮
                     // TODO: 2017/4/23
-                    myOrderActivityPresenter.orderSubmitPlay(bean.getOrder_sn(), "alipay");
+                    myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay");
 //                    myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
                 }else if(bean.getOrder_state() == 20) {
                     //待发货，只有取消按钮
                     // TODO: 2017/4/23
-                }else if(bean.getOrder_state() == 40) {
+                }else if(bean.getOrder_state() == 30) {
                     //待收货，只有确认收货按钮
                     // TODO: 2017/4/23
                     myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
+                }else if(bean.getOrder_state() == 40) {
+                    //已收货，只有删除订单按钮 和  评价按钮
+                    // TODO: 2017/4/23
+//                    myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
+                    myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_delete");
                 }
 
             }
@@ -244,7 +249,7 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
                         Toast.makeText(getActivity(), "支付成功", Toast.LENGTH_SHORT).show();
-//                        loadUrl(rebuildUrl(WebViewUtil.alipay_back_success_url));
+                        RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
                     } else {
                         // 判断resultStatus 为非“9000”则代表可能支付失败
                         // “8000”代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）

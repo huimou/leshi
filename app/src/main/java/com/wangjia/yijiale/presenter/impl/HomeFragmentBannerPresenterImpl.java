@@ -101,7 +101,7 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
         addSubscription(s);
     }
 
-//    @Override
+    //    @Override
 //    public void getShiList(String area_id) {
 ////        addAddressChooseActivityView.showProgressDialog();
 //        Subscription s = BaseNoCacheRequest.getBaseApi().area_list(area_id)
@@ -131,7 +131,7 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
 //                });
 //        addSubscription(s);
 //    }
-
+//店铺分类
     @Override
     public void getStoreClassify() {
 //        homeFragmentBannerView.showProgressDialog();
@@ -163,6 +163,7 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
         addSubscription(s);
     }
 
+    //首页中间广告
     @Override
     public void getCenterBannerData() {
         homeFragmentBannerView.showProgressDialog();
@@ -194,7 +195,7 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
         addSubscription(s);
     }
 
-
+//    首页店铺分类带图标
     @Override
     public void getClassifyData() {
 //        homeFragmentBannerView.showProgressDialog();
@@ -226,6 +227,7 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
         addSubscription(s);
     }
 
+//    商家列表
     @Override
     public void getStoreListData(String keyword, String area_info, String now_page) {
         //homeFragmentBannerView.showProgressDialog();
@@ -262,8 +264,8 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
     public void nearStoreList(String lng, String lat, int sort, int page_size, String sc_id, String child_sc_id,
                               int page_now, String province, String city) {
         //homeFragmentBannerView.showProgressDialog();
-        Log.e("附近店铺列表,请求参数：", "lng:" + lng + "^lat:" + lat + "^sort:" + sort + "^page_size:" + page_size + "^sc_id:" +
-                sc_id + "^child_sc_id:" + child_sc_id + "^page_now:" + page_now + "^province:" + province + "^city:" + city);
+        Log.e("附近店铺列表,请求参数：", "lng:" + lng + "--lat:" + lat + "--sort:" + sort + "--page_size:" + page_size + "--sc_id:" +
+                sc_id + "--child_sc_id:" + child_sc_id + "--page_now:" + page_now + "--province:" + province + "--city:" + city);
         Subscription s = BaseNoCacheRequest.getBaseApi().nearStoreList(lng, lat, sort, page_size, sc_id, child_sc_id, page_now, province, city)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -292,11 +294,4 @@ public class HomeFragmentBannerPresenterImpl extends BasePresenterImpl implement
         addSubscription(s);
     }
 
-    /*@Override
-    public void getGuokrHotFromCache(int offset) {
-        if (mCacheUtil.getAsJSONObject(Config.FirstFragment + offset) != null) {
-            GetVersion getVersion = new Gson().fromJson(mCacheUtil.getAsJSONObject(Config.FirstFragment + offset).toString(), GetVersion.class);
-            firstFragmentView.getVersion((GetVersion) getVersion);
-        }
-    }*/
 }

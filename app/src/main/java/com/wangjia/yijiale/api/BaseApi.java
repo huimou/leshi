@@ -158,7 +158,9 @@ public interface BaseApi {
     //    //商品分类
 //    @GET("mobile/index.php?act=goods_class&op=get_goods_classify")
 //    Observable<Classify> get_goods_classify();
-    //商品分类
+
+
+    //首页店铺分类带图标
     @GET("mobileapp/index.php?act=shop_class&op=get_store_list")
     Observable<Classify> get_goods_classify();
 

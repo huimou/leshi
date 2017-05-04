@@ -60,6 +60,7 @@ public class OrderDetails {
         private String store_avatar;
         private String area_info;
         private String store_address;
+        private String store_name;
         private String order_sn;
         private String add_time;
         private String payment_code;
@@ -68,6 +69,14 @@ public class OrderDetails {
         private String deliver_explain;
         private String payment_code_text;
         private List<OrderGoodsBean> order_goods;
+
+        public String getStore_name() {
+            return store_name;
+        }
+
+        public void setStore_name(String store_name) {
+            this.store_name = store_name;
+        }
 
         public String getStore_avatar() {
             return store_avatar;

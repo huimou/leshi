@@ -111,8 +111,8 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
     public void onResume() {
         super.onResume();
         //        获取确认订单页面数据
-        confirmOrderActivityPresenterImpl.submitOrderForOnce(YiApplication.getInstance().getToken(), store_id, 1,
-                cart_id, "");
+//        confirmOrderActivityPresenterImpl.submitOrderForOnce(YiApplication.getInstance().getToken(), store_id, 1,
+//                cart_id, "");
     }
 
     @Override
@@ -176,11 +176,6 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
 
     @Override
     public void getData(Cart model) {
-//        ConfirmListViewAdapter confirmListViewAdapter = new ConfirmListViewAdapter(ConfirmOrderActivity.this, model.getDatas().getCart_list());
-//        goodsNorv.setAdapter(confirmListViewAdapter);
-//        has_buy_num_tv.setText("共" + model.getDatas().getSum() + "件商品 小计：￥" + model.getDatas().getSum_price());
-//        priceTotleTv.setText("￥" + model.getDatas().getSum_price());
-//
         for (int i = 0; i < model.getDatas().getCart_list().size(); i++) {
             cart_id += model.getDatas().getCart_list().get(i).getCart_id() + "|" + model.getDatas().getCart_list().get(i).getGoods_sum() + ",";
             my_goods_id += model.getDatas().getCart_list().get(i).getGoods_id() + "|" + model.getDatas().getCart_list().get(i).getGoods_sum() + ",";
@@ -192,37 +187,11 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
             confirmOrderActivityPresenterImpl.submitOrderForOnce(YiApplication.getInstance().getToken(), store_id, 1,
                     cart_id, "");
         }
-//        if (getInfo.getDatas() != null && getInfo.getDatas().getAddress_list() != null
-//                && getInfo.getDatas().getAddress_list().get(0) != null) {
-////            获取确认订单页面数据
-//            confirmOrderActivityPresenterImpl.submitOrderForOnce(YiApplication.getInstance().getToken(), store_id, 1,
-//                    cart_id, getInfo.getDatas().getAddress_list().get(0).getAddress_id());
-//        }
 
     }
 
     @Override
     public void getDefaultAddress(AddressManageList getInfo) {
-
-//        if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
-//            this.getInfo = getInfo;
-//            if (getInfo.getDatas() != null && getInfo.getDatas().getAddress_list() != null) {
-//                AddressManageList.DatasBean.AddressListBean addressListBean = getInfo.getDatas().getAddress_list().get(0);
-//                if (StringFunction.isNotNull(addressListBean.getTrue_name())) {
-//                    name.setText(addressListBean.getTrue_name());
-//                }
-//
-//                if (StringFunction.isNotNull(addressListBean.getTel_phone())) {
-//                    phoneTv.setText(addressListBean.getTel_phone());
-//                }
-//
-//                if (StringFunction.isNotNull(addressListBean.getProvince_name())) {
-//                    addressTv.setText(addressListBean.getProvince_name() + addressListBean.getCity_name()
-//                            + addressListBean.getArea_name() + addressListBean.getAddress());
-//                }
-//
-//            }
-//        }
 
 
     }
@@ -243,8 +212,6 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
                 }
 
                 if (StringFunction.isNotNull(address_info.getAddress())) {
-//                    addressTv.setText(address_info.getProvince_name() + addressListBean.getCity_name()
-//                            + addressListBean.getArea_name() + addressListBean.getAddress());
 
                     addressTv.setText(address_info.getArea_info() + address_info.getAddress());
                     biaozhuTv.setText("(确认订单后请尽快付款，过时订单将自动取消)");
@@ -285,6 +252,8 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
                 cart_id = cart_id.substring(0, cart_id.length() - 1);
                 my_goods_id = my_goods_id.substring(0, my_goods_id.length() - 1);
             }
+        }else{
+            ToastUtils.showToast(ConfirmOrderActivity.this,getInfo.getMsg());
         }
     }
 
@@ -293,10 +262,22 @@ public class ConfirmOrderActivity extends AppCompatActivity implements ConfirmOr
         if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
             Intent intent = new Intent(ConfirmOrderActivity.this, ZhifuActivity.class);
             intent.putExtra("pay_sn", getInfo.getDatas().getPay_sn());
-            startActivity(intent);
+            startActivityForResult(intent,10001);
         } else {
             ToastUtils.showToast(ConfirmOrderActivity.this, getInfo.getMsg());
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode ==RESULT_OK) {
+            switch (requestCode) {
+                case 10001:
+                    finish();
+                    break;
+            }
+        }
     }
 }

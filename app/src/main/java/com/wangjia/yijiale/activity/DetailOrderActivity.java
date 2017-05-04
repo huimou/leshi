@@ -19,6 +19,7 @@ import com.wangjia.yijiale.iview.OrderDetailsActivityView;
 import com.wangjia.yijiale.presenter.DetailsOrderDetailsPresenter;
 import com.wangjia.yijiale.presenter.impl.OrderActivityDetailsImpl;
 import com.wangjia.yijiale.utils.L;
+import com.wangjia.yijiale.utils.StringFunction;
 import com.wangjia.yijiale.utils.Titlebulder;
 import com.wangjia.yijiale.views.CustomProgress;
 import com.wangjia.yijiale.views.NoScrollRecycleView;
@@ -108,7 +109,7 @@ public class DetailOrderActivity extends AppCompatActivity implements OrderDetai
         if (model!=null){
             Picasso.with(this).load(model.getDatas().getStore_avatar()).into(rivImage);
             List<OrderDetails.DatasBean.OrderGoodsBean> order_goods = model.getDatas().getOrder_goods();
-            tvVegetName.setText(order_name);
+            tvVegetName.setText(model.getDatas().getStore_name());
             tvVegetTime.setText(model.getDatas().getStore_address());
             tvTotal.setText("共"+order_goods.size()+"件商品   小计：");
             tvTotalMoney.setText(model.getDatas().getOrder_amount()+"元");
@@ -116,8 +117,8 @@ public class DetailOrderActivity extends AppCompatActivity implements OrderDetai
             tvOrderTime.setText(model.getDatas().getAdd_time());
             tvPay.setText(model.getDatas().getPayment_code_text());
             tvBeizhu.setText(model.getDatas().getDeliver_explain());
-            if(model.getDatas().getPayment_code().equals("online")) {
-                tvPay.setText("在线支付");
+            if(StringFunction.isNotNull(model.getDatas().getPayment_code_text())) {
+                tvPay.setText(model.getDatas().getPayment_code_text());
             }else{
                 tvPay.setText("余额支付");
             }

@@ -16,6 +16,9 @@ import com.wangjia.yijiale.activity.DetailOrderActivity;
 import com.wangjia.yijiale.entity.MyOrder;
 import com.wangjia.yijiale.views.RoundAngleImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -27,17 +30,28 @@ public class OrderAdapter extends RecyclerView.Adapter {
 
     LayoutInflater inflater;
     Context context;
-    MyOrder datas;
+//    MyOrder datas;
+    List<MyOrder.DatasBean> dataslist = new ArrayList<>();
 
 
     public OrderAdapter(MyOrder datas, Context context) {
-        this.datas = datas;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        dataslist.clear();
+        for (int i = 0;datas !=null && datas.getDatas()!=null && i < datas.getDatas().size(); i++) {
+            if(datas.getDatas().get(i).getDelete_state()== 0){
+                dataslist.add(datas.getDatas().get(i));
+            }
+        }
     }
 
     public void setData(MyOrder data) {
-        this.datas = data;
+        dataslist.clear();
+        for (int i = 0;data !=null && data.getDatas()!=null &&  i < data.getDatas().size(); i++) {
+            if(data.getDatas().get(i).getDelete_state()== 0){
+                dataslist.add(data.getDatas().get(i));
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -52,7 +66,7 @@ public class OrderAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
-        final MyOrder.DatasBean datasBean = datas.getDatas().get(position);
+        final MyOrder.DatasBean datasBean = dataslist.get(position);
         viewHolder.orderNumber.setText("订单号：" + datasBean.getOrder_sn());
         viewHolder.orderStatus.setText(datasBean.getOrder_state_text());
         viewHolder.tvVegetName.setText(datasBean.getStore_name());
@@ -73,13 +87,15 @@ public class OrderAdapter extends RecyclerView.Adapter {
             }
         });
 
-        if (datasBean.getOrder_state() == 0) {//已退货，已取消
+        if (datasBean.getOrder_state() == 1) {//已退货，已取消
             viewHolder.tvCanlePay.setVisibility(View.GONE);
             viewHolder.tvPay.setVisibility(View.VISIBLE);
             viewHolder.tvPay.setText("删除订单");
+            viewHolder.tv_dicus.setVisibility(View.GONE);
         } else if (datasBean.getOrder_state() == 20) {//待发货，待收货
             viewHolder.tvPay.setVisibility(View.GONE);
-            viewHolder.tvCanlePay.setVisibility(View.VISIBLE);
+            viewHolder.tvCanlePay.setVisibility(View.GONE);
+//            viewHolder.tvCanlePay.setText("取消订单");
             viewHolder.tv_dicus.setVisibility(View.GONE);
         } else if (datasBean.getOrder_state() == 40) {//已完成，待评价，删除订单
             viewHolder.tvPay.setText("删除订单");
@@ -87,12 +103,29 @@ public class OrderAdapter extends RecyclerView.Adapter {
             viewHolder.tvCanlePay.setVisibility(View.GONE);
             if (datasBean.getEvaluation_state() == 0) {
                 viewHolder.tv_dicus.setVisibility(View.VISIBLE);
-            }else{
-                viewHolder.tv_dicus.setVisibility(View.GONE);
+                viewHolder.tv_dicus.setEnabled(true);
+                viewHolder.tv_dicus.setBackgroundResource(R.drawable.corners_has_cancle_color_blue_bg);
+            }else if(datasBean.getEvaluation_state() == 1){
+                viewHolder.tv_dicus.setVisibility(View.VISIBLE);
+                viewHolder.tv_dicus.setText("已评价");
+                viewHolder.tv_dicus.setBackgroundResource(R.drawable.corners_has_cancle_color_bg);
+                viewHolder.tv_dicus.setEnabled(false);
+            }else if(datasBean.getEvaluation_state() == 2){
+                viewHolder.tv_dicus.setVisibility(View.VISIBLE);
+                viewHolder.tv_dicus.setText("已评价");
+                viewHolder.tv_dicus.setBackgroundResource(R.drawable.corners_has_cancle_color_bg);
+                viewHolder.tv_dicus.setEnabled(false);
             }
         } else if (datasBean.getOrder_state() == 10) {//待付款
             viewHolder.tvPay.setVisibility(View.VISIBLE);
+            viewHolder.tvPay.setText("待付款");
             viewHolder.tvCanlePay.setVisibility(View.VISIBLE);
+            viewHolder.tvCanlePay.setText("取消订单");
+            viewHolder.tv_dicus.setVisibility(View.GONE);
+        } else if (datasBean.getOrder_state() == 30) {//待收货
+            viewHolder.tvPay.setVisibility(View.VISIBLE);
+            viewHolder.tvPay.setText("确认收货");
+            viewHolder.tvCanlePay.setVisibility(View.GONE);
             viewHolder.tv_dicus.setVisibility(View.GONE);
         }
         setItemEventClick(viewHolder);
@@ -186,14 +219,14 @@ public class OrderAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     int layoutPostion = myViewHolder.getLayoutPosition();
-                    mOnItemClickListener.onCanlePayClick(view, layoutPostion, datas.getDatas().get(layoutPostion));
+                    mOnItemClickListener.onCanlePayClick(view, layoutPostion, dataslist.get(layoutPostion));
                 }
             });
             myViewHolder.tvPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int layoutPostion = myViewHolder.getLayoutPosition();
-                    mOnItemClickListener.onPayClick(view, layoutPostion, datas.getDatas().get(layoutPostion));
+                    mOnItemClickListener.onPayClick(view, layoutPostion, dataslist.get(layoutPostion));
                 }
             });
 
@@ -201,7 +234,7 @@ public class OrderAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     int layoutPostion = myViewHolder.getLayoutPosition();
-                    mOnItemClickListener.onCommentClick(view, layoutPostion, datas.getDatas().get(layoutPostion));
+                    mOnItemClickListener.onCommentClick(view, layoutPostion, dataslist.get(layoutPostion));
                 }
             });
 
@@ -227,8 +260,8 @@ public class OrderAdapter extends RecyclerView.Adapter {
     }*/
     @Override
     public int getItemCount() {
-        if (null != datas) {
-            return datas.getDatas().size();
+        if (null != dataslist) {
+            return dataslist.size();
         }
         return 0;
     }

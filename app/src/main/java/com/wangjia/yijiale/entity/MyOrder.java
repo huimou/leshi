@@ -46,6 +46,7 @@ public class MyOrder {
     public static class DatasBean {
         /**
          * order_sn : 9000000000001801
+         * order_sn : 9000000000001801
          * order_state : 20
          * order_state_text : 待发货
          * store_avatar : http://cs.j.cqxueao.cn/data/upload/shop//store/05448792822646983_sm.jpg
@@ -56,6 +57,7 @@ public class MyOrder {
          */
 
         private String order_sn;
+        private String pay_sn;
         private int order_state;
         private String order_state_text;
         private String store_avatar;
@@ -64,6 +66,24 @@ public class MyOrder {
         private String order_amount;
         private int order_id;
         private int evaluation_state;
+        private int delete_state;
+
+
+        public int getDelete_state() {
+            return delete_state;
+        }
+
+        public void setDelete_state(int delete_state) {
+            this.delete_state = delete_state;
+        }
+
+        public String getPay_sn() {
+            return pay_sn;
+        }
+
+        public void setPay_sn(String pay_sn) {
+            this.pay_sn = pay_sn;
+        }
 
         public int getEvaluation_state() {
             return evaluation_state;

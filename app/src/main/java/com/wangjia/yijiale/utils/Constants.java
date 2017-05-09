@@ -40,6 +40,7 @@ public class Constants {
      * 用户头像
      */
     public static String MEMBER_AVATAR = "member_avatar";
+    public static String STORE_ID = "store_id";
 
     /**
      * String: ""

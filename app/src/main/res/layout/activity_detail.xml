@@ -4,11 +4,97 @@
     android:layout_height="match_parent"
     android:background="#f6f2eb">
 
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:id="@+id/choice_finish"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/red">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="选好了"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/heji_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/choice_finish">
+
+                <TextView
+                    android:id="@+id/heji_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="合计："
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/price_totle_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/heji_tv"
+                    android:text="￥0.00"
+                    android:textColor="@color/list_item_text_pressed_bg"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/heji_rl"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/choice_finish"
+                android:text="不含运费" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/cart_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/dcartimg" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/all_choice_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#90000000"
+        android:orientation="horizontal"
+        android:visibility="gone"></LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/all_choice_layout"
+        android:layout_toEndOf="@+id/all_choice_layout">
 
 
         <LinearLayout
@@ -127,89 +213,5 @@
         </com.wangjia.yijiale.views.NoAlphRecycleScrollview>
 
     </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/transparent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/white">
-
-            <RelativeLayout
-                android:id="@+id/choice_finish"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:background="@color/red">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="选好了"
-                    android:textColor="@color/white" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/heji_rl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/choice_finish">
-
-                <TextView
-                    android:id="@+id/heji_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="合计："
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/price_totle_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@+id/heji_tv"
-                    android:text="￥0.00"
-                    android:textColor="@color/list_item_text_pressed_bg"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/heji_rl"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toLeftOf="@+id/choice_finish"
-                android:text="不含运费" />
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/cart_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/dcartimg" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/all_choice_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#90000000"
-        android:orientation="horizontal"
-        android:visibility="gone"></LinearLayout>
 
 </RelativeLayout>

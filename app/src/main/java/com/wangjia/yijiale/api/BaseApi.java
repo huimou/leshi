@@ -18,6 +18,7 @@ import com.wangjia.yijiale.entity.MyOrder;
 import com.wangjia.yijiale.entity.MyStoreDetail;
 import com.wangjia.yijiale.entity.NearStoreList;
 import com.wangjia.yijiale.entity.OrderDetails;
+import com.wangjia.yijiale.entity.QrCode;
 import com.wangjia.yijiale.entity.Register;
 import com.wangjia.yijiale.entity.SearchShopBean;
 import com.wangjia.yijiale.entity.ShowVipBean;
@@ -55,6 +56,17 @@ public interface BaseApi {
     @POST("mobileapp/index.php?act=api&op=registerapp")
     Observable<Register> register(@Field("member_mobile") String member_mobile,
                                   @Field("member_passwd") String member_password, @Field("verific") String verific);
+
+    //根据商家id获取商家收款二维码
+    @FormUrlEncoded
+    @POST("mobileapp/index.php?act=shop&op=shop_code")
+    Observable<QrCode> shop_code(@Field("store_id") int store_id);
+
+
+    //确认向商家付款
+    @FormUrlEncoded
+    @POST("mobileapp/index.php?act=apimember&op=member_pay2buz")
+    Observable<BaseBean> payMoneyForStore(@Field("token") String token,@Field("amount") String amount,@Field("store_id") int store_id);
 
     //获取验证码
     @FormUrlEncoded

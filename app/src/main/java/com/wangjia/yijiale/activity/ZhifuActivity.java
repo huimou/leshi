@@ -29,6 +29,7 @@ import com.wangjia.yijiale.entity.ZhifuShiWuBean;
 import com.wangjia.yijiale.iview.RegisterActivityView;
 import com.wangjia.yijiale.presenter.impl.RegisterActivityPresenterImpl;
 import com.wangjia.yijiale.utils.Constants;
+import com.wangjia.yijiale.utils.StringFunction;
 import com.wangjia.yijiale.utils.Titlebulder;
 import com.wangjia.yijiale.utils.ToastUtils;
 
@@ -217,7 +218,7 @@ public class ZhifuActivity extends AppCompatActivity implements RegisterActivity
     }
 
     @Override
-    public void orderSubmitPlay(SubmitOrderBean submitOrderBean) {
+    public void orderSubmitPlay(final SubmitOrderBean submitOrderBean) {
         //确认订单
         if (submitOrderBean.getDatas() != null && submitOrderBean.getDatas().getAlipay_str() != null &&  type == 1) {
 //            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
@@ -227,13 +228,21 @@ public class ZhifuActivity extends AppCompatActivity implements RegisterActivity
         }else if(submitOrderBean.getCode()== Constants.RESPONSE_SUCCESS &&  type == 2){
             ToastUtils.showToast(ZhifuActivity.this,"账户余额不足，请更换其他支付方式！");
         }else if(submitOrderBean.getCode()== 201 &&  type == 2){
-            ToastUtils.showToast(ZhifuActivity.this,"支付成功！");
-            Intent intent = new Intent(ZhifuActivity.this, DetailOrderActivity.class);
-            intent.putExtra("order_id", Integer.parseInt(order_id));
-            intent.putExtra("order_name", order_id);
-            ZhifuActivity.this.startActivity(intent);
-            setResult(RESULT_OK);
-            finish();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ToastUtils.showToast(ZhifuActivity.this,submitOrderBean.getMsg());
+                    Intent intente = new Intent(ZhifuActivity.this, DetailOrderActivity.class);
+                    order_id = submitOrderBean.getDatas().getOrder_id();
+                    if(StringFunction.isNotNull(order_id)) {
+                        intente.putExtra("order_id", Integer.parseInt(order_id));
+                    }
+                    startActivity(intente);
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            });
+
         }
     }
 

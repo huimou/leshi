@@ -124,9 +124,19 @@ public class Login {
         private String member_name;
         private int member_sex;
         private int member_age;
+        private int store_id;
         private String member_truename;
         private String member_idcard;
         private String member_nickname;
+
+
+        public int getStore_id() {
+            return store_id;
+        }
+
+        public void setStore_id(int store_id) {
+            this.store_id = store_id;
+        }
 
         public static DatasBean objectFromData(String str) {
 

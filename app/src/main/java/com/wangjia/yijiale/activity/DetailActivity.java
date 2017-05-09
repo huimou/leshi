@@ -260,7 +260,7 @@ public class DetailActivity extends AppCompatActivity implements CartCartWindow.
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.choice_finish, R.id.cart_add, R.id.titlepg_right_iv})
+    @OnClick({R.id.choice_finish, R.id.cart_add, R.id.titlepg_right_iv, R.id.scan_erweima_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cart_add:
@@ -289,6 +289,11 @@ public class DetailActivity extends AppCompatActivity implements CartCartWindow.
                     ToastUtils.showToast(DetailActivity.this,"亲，你尚未购买任何东西，不能提交哦！");
                 }
 
+                break;
+            case R.id.scan_erweima_iv:
+                Intent intent = new Intent(DetailActivity.this, QrCodeActivity.class);
+                intent.putExtra("store_id",store_id);
+                startActivity(intent);
                 break;
         }
     }

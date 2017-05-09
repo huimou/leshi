@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityVie
                 SPUtils.put(LoginActivity.this, Constants.MEMBER_MOBILE, model.getDatas().getMember_name());
 //                SPUtils.put(LoginActivity.this, Constants.MEMBER_NAME, model.getDatas().getMember_name());
                 SPUtils.put(LoginActivity.this, Constants.MEMBER_AVATAR, model.getDatas().getMember_avatar());
+                SPUtils.put(LoginActivity.this, Constants.STORE_ID, model.getDatas().getStore_id());
                 i.setClass(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }

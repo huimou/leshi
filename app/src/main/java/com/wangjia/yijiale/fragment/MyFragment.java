@@ -92,6 +92,13 @@ public class MyFragment extends Fragment {
             }
         });
 
+        int store_id = (int) SPUtils.get(getActivity(), Constants.STORE_ID, 0);
+        if (store_id != 0) {
+            scrollView.getPullRootView().findViewById(R.id.my_pay_rl).setVisibility(View.VISIBLE);
+        } else {
+            scrollView.getPullRootView().findViewById(R.id.my_pay_rl).setVisibility(View.GONE);
+        }
+
         scrollView.getPullRootView().findViewById(R.id.r_my_order).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,24 +225,24 @@ public class MyFragment extends Fragment {
         headViewView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(StringFunction.isNotNull(YiApplication.getInstance().getToken())) {
+                if (StringFunction.isNotNull(YiApplication.getInstance().getToken())) {
                     tIntent = new Intent(getActivity(), UpdateZlActivity.class);
                     startActivity(tIntent);
-                }else{
+                } else {
                     tIntent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(tIntent);
                 }
             }
         });
-        if(StringFunction.isNotNull(SPUtils.get(getActivity(), Constants.TOKEN,"").toString())){
-            user_name_tv.setText(SPUtils.get(getActivity(), Constants.RealName,"").toString());
-            String  so = SPUtils.get(getActivity(), Constants.MEMBER_AVATAR, "").toString();
-            if(StringFunction.isNotNull(so)) {
+        if (StringFunction.isNotNull(SPUtils.get(getActivity(), Constants.TOKEN, "").toString())) {
+            user_name_tv.setText(SPUtils.get(getActivity(), Constants.RealName, "").toString());
+            String so = SPUtils.get(getActivity(), Constants.MEMBER_AVATAR, "").toString();
+            if (StringFunction.isNotNull(so)) {
                 Glide.with(getActivity()).load(so).into(headViewView);
-            }else{
+            } else {
                 Glide.with(getActivity()).load(R.mipmap.my).into(headViewView);
             }
-        }else{
+        } else {
             user_name_tv.setText("未登录");
         }
     }

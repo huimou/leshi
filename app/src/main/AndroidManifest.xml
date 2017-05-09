@@ -107,6 +107,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".activity.QrCodeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".activity.GoodsDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

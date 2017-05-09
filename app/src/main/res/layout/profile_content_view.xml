@@ -243,8 +243,10 @@
         android:id="@+id/pay">
 
         <RelativeLayout
+            android:id="@+id/my_pay_rl"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:visibility="gone"
             android:background="@color/white">
 
             <ImageView

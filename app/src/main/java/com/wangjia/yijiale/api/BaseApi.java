@@ -92,13 +92,13 @@ public interface BaseApi {
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_payment&op=recharge_add")
     Observable<SubmitOrderBean> vipSubmitOrder(@Field("token") String token, @Field("pdr_amount") String pdr_amount,
-                                             @Field("payment_method") String payment_method);
+                                               @Field("payment_method") String payment_method,@Field("pd_pay") String pd_pay);
 
     //订单确认支付
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=member_payment&op=pay_new")
     Observable<SubmitOrderBean> orderSubmitPlay(@Field("token") String token, @Field("pay_sn") String pay_sn,
-                                                @Field("payment_method") String payment_method);
+                                                @Field("payment_method") String payment_method, @Field("pd_pay") String pd_pay);
 
     //会员提交提现申请
     @FormUrlEncoded
@@ -248,9 +248,9 @@ public interface BaseApi {
     @FormUrlEncoded
     @POST("mobileapp/index.php?act=apimember&op=_store_join_info")
     Observable<BaseBean> store_id(@Field("token") String token, @Field("company_name") String company_name,
-                                   @Field("company_address_detail") String company_address_detail,
+                                  @Field("company_address_detail") String company_address_detail,
                                   @Field("contacts_name") String contacts_name, @Field("contacts_phone") String contacts_phone
-                                 );
+    );
 
     //地区（省市区）
     @FormUrlEncoded

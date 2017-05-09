@@ -70,11 +70,11 @@ public class ChargeActivityPresenterImpl extends BasePresenterImpl implements Ch
 
 //会员充值下单
     @Override
-    public void vipSubmitOrder(String token,String pdr_amount,String payment_method) {
+    public void vipSubmitOrder(String token,String pdr_amount,String payment_method,String pd_pay) {
         registerActivityView.showProgressDialog();
         Subscription s = BaseNoCacheRequest
                 .getBaseApi()
-                .vipSubmitOrder(YiApplication.getInstance().getToken(), pdr_amount,payment_method)
+                .vipSubmitOrder(YiApplication.getInstance().getToken(), pdr_amount,payment_method,"0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SubmitOrderBean>() {
@@ -137,11 +137,11 @@ public class ChargeActivityPresenterImpl extends BasePresenterImpl implements Ch
 
     //订单确认支付
     @Override
-    public void orderSubmitPlay(String ply_sn,String payment_method) {
+    public void orderSubmitPlay(String ply_sn,String payment_method,String pd_pay) {
         registerActivityView.showProgressDialog();
         Subscription s = BaseNoCacheRequest
                 .getBaseApi()
-                .orderSubmitPlay(YiApplication.getInstance().getToken(),ply_sn,payment_method)
+                .orderSubmitPlay(YiApplication.getInstance().getToken(),ply_sn,payment_method,pd_pay)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SubmitOrderBean>() {

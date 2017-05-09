@@ -19,5 +19,5 @@ public interface RegisterActivityPresenter extends BasePresenter {
 
     void shiwuOrder(String ply_sn);
 
-    void orderSubmitPlay(String ply_sn,String payment_method);
+    void orderSubmitPlay(String ply_sn,String payment_method,String pd_pay);
 }

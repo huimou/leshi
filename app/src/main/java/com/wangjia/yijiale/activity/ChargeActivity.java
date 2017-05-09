@@ -90,7 +90,7 @@ public class ChargeActivity extends AppCompatActivity implements ChargeActivityV
             case R.id.zhifubao_rl:
                 //支付宝
                 if(StringFunction.isNotNull(chongzhiEt.getText().toString())) {
-                    registerActivityPresenter.vipSubmitOrder(YiApplication.getInstance().getToken(),chongzhiEt.getText().toString(),"alipay" );
+                    registerActivityPresenter.vipSubmitOrder(YiApplication.getInstance().getToken(),chongzhiEt.getText().toString(),"alipay" ,"0");
                 }else{
                     ToastUtils.showToast(ChargeActivity.this,"请输入充值金额！");
                 }
@@ -214,7 +214,7 @@ public class ChargeActivity extends AppCompatActivity implements ChargeActivityV
         if(StringFunction.isNotNull(getInfo.getDatas())
                 &&StringFunction.isNotNull(getInfo.getDatas().getPay_info())
                 &&StringFunction.isNotNull(getInfo.getDatas().getPay_info().getPay_sn()) ) {
-            registerActivityPresenter.orderSubmitPlay(getInfo.getDatas().getPay_info().getPay_sn(), "alipay");
+            registerActivityPresenter.orderSubmitPlay(getInfo.getDatas().getPay_info().getPay_sn(), "alipay","0");
         }
     }
 

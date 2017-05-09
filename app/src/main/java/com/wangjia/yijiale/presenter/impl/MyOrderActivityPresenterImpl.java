@@ -100,11 +100,11 @@ public class MyOrderActivityPresenterImpl extends BasePresenterImpl implements M
 
     //订单确认支付
     @Override
-    public void orderSubmitPlay(String ply_sn,String payment_method) {
+    public void orderSubmitPlay(String ply_sn,String payment_method,String pd_pay) {
 //        registerActivityView.showProgressDialog();
         Subscription s = BaseNoCacheRequest
                 .getBaseApi()
-                .orderSubmitPlay(YiApplication.getInstance().getToken(),ply_sn,payment_method)
+                .orderSubmitPlay(YiApplication.getInstance().getToken(),ply_sn,payment_method ,pd_pay)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SubmitOrderBean>() {

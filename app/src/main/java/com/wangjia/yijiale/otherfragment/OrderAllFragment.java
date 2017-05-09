@@ -108,7 +108,7 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
                 }else if(bean.getOrder_state() == 10) {
                     //待付款，有取消按钮，和 去付款按钮
                     // TODO: 2017/4/23
-                    myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay");
+                    myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay","0");
 //                    myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
                 }else if(bean.getOrder_state() == 20) {
                     //待发货，只有取消按钮

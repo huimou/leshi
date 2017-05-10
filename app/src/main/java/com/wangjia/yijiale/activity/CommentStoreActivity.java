@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
@@ -36,6 +37,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * 评论
@@ -128,15 +131,15 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
             mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if(checkedId == R.id.main_homeRadioBut){
+                    if (checkedId == R.id.main_homeRadioBut) {
                         //好评
-                        store_desccredit =5;
-                    }else  if(checkedId == R.id.main_questionRadioBut){
+                        store_desccredit = 5;
+                    } else if (checkedId == R.id.main_questionRadioBut) {
                         //中评
-                        store_desccredit =4;
-                    }else  if(checkedId == R.id.main_findRadioBut){
+                        store_desccredit = 4;
+                    } else if (checkedId == R.id.main_findRadioBut) {
                         //差评
-                        store_desccredit =3;
+                        store_desccredit = 3;
                     }
                 }
             });
@@ -145,9 +148,9 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
 
     @Override
     public void commentOrder(BaseBean getInfo) {
-        if(getInfo.getCode()== Constants.RESPONSE_SUCCESS){
+        if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
             RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
-            ToastUtils.showToast(CommentStoreActivity.this,getInfo.getMsg());
+            ToastUtils.showToast(CommentStoreActivity.this, getInfo.getMsg());
             finish();
         }
     }
@@ -156,14 +159,45 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.chaping_liyou_tv:
-                //评论
-                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(),order_id,store_desccredit,5,5,5);
-
+                //评论、
+                upLoadLatLonToService();
+//                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(), order_id, store_desccredit, 5, 5, 5);
                 break;
 
 
-
         }
+    }
+
+
+    /**
+     * 上传
+     */
+    private void upLoadLatLonToService() {
+        com.alibaba.fastjson.JSONObject jsonObject = new com.alibaba.fastjson.JSONObject();
+        jsonObject.put("token", YiApplication.getInstance().getToken());
+        jsonObject.put("order_id", order_id);
+        jsonObject.put("store_desccredit", store_desccredit);
+        jsonObject.put("store_servicecredit", store_desccredit);
+        jsonObject.put("store_deliverycredit", store_desccredit);
+        jsonObject.put("goods_scores", store_desccredit);
+        com.alibaba.fastjson.JSONObject jsonObject_one = new com.alibaba.fastjson.JSONObject();
+        jsonObject_one.put("id", 1);
+        jsonObject_one.put("comment", chapingLiyouEt.getText().toString());
+        jsonObject.put("goods_comments", jsonObject_one);
+
+        YiApplication.getInstance().getClient().post(this, "", new StringEntity(jsonObject.toString(), "utf-8"), "application/json", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
+                ToastUtils.showToast(CommentStoreActivity.this,  "评论成功！");
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                ToastUtils.showToast(CommentStoreActivity.this, "评论失败！");
+            }
+        });
     }
 
     @Override

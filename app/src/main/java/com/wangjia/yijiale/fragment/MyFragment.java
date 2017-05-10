@@ -20,6 +20,7 @@ import com.wangjia.yijiale.activity.LoginActivity;
 import com.wangjia.yijiale.activity.MyCollectionActivity;
 import com.wangjia.yijiale.activity.MyOrderActivity;
 import com.wangjia.yijiale.activity.MySettingActivity;
+import com.wangjia.yijiale.activity.QrCodeActivity;
 import com.wangjia.yijiale.activity.StoreInActivity;
 import com.wangjia.yijiale.activity.TxActivity;
 import com.wangjia.yijiale.activity.UpdateZlActivity;
@@ -92,9 +93,17 @@ public class MyFragment extends Fragment {
             }
         });
 
-        int store_id = (int) SPUtils.get(getActivity(), Constants.STORE_ID, 0);
+        final int store_id = (int) SPUtils.get(getActivity(), Constants.STORE_ID, 0);
         if (store_id != 0) {
             scrollView.getPullRootView().findViewById(R.id.my_pay_rl).setVisibility(View.VISIBLE);
+            scrollView.getPullRootView().findViewById(R.id.my_pay_rl).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), QrCodeActivity.class);
+                    intent.putExtra("store_id",store_id);
+                    startActivity(intent);
+                }
+            });
         } else {
             scrollView.getPullRootView().findViewById(R.id.my_pay_rl).setVisibility(View.GONE);
         }

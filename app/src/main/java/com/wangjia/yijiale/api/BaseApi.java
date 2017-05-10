@@ -98,7 +98,7 @@ public interface BaseApi {
     @POST("mobileapp/index.php?act=member_evaluate&op=save")
     Observable<BaseBean> commentOrder(@Field("token") String token, @Field("order_id") int order_id, @Field("store_desccredit") int store_desccredit,
                                       @Field("store_servicecredit") int store_servicecredit, @Field("store_deliverycredit") int store_deliverycredit,
-                                      @Field("goods[*][score]") int goods);
+                                      @Field("goods_comments")  int goods);
 
     //会员充值下单
     @FormUrlEncoded

@@ -89,7 +89,6 @@ public class OrderActivityDetailsImpl extends BasePresenterImpl implements Detai
                         orderDetailsActivityView.hidProgressDialog();
                         orderDetailsActivityView.commentOrder(bean);
                         L.i("评价订单:",new Gson().toJson(bean));
-                        //mCacheUtil.put(Config.FirstFragment, new Gson().toJson(getVersion));
                     }
                 });
         addSubscription(s);

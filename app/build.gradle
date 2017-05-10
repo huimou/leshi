@@ -74,4 +74,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile files('libs/alipaySDK-20150724.jar')
     compile 'com.kaopiz:kprogresshud:1.0.5'
+    //http
+    compile 'com.loopj.android:android-async-http:1.4.9'
+    //阿里fasstJson
+    compile 'com.alibaba:fastjson:1.2.12'
 }

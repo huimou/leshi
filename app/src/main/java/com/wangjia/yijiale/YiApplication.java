@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Vibrator;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.wangjia.yijiale.utils.Constants;
 import com.wangjia.yijiale.utils.SPUtils;
 
@@ -27,6 +28,7 @@ public class YiApplication extends Application {
      * 存储临时文件名称
      */
     public static final String TEMP_FILE_NAME = "xiaomiImage";
+    private AsyncHttpClient client;
 
     @Override
     public void onCreate() {
@@ -34,6 +36,22 @@ public class YiApplication extends Application {
         // 初始化 JPush
         instance = this;
 
+        client = new AsyncHttpClient();
+//        client.setTimeout(3*60*1000);
+        client.setTimeout(40*1000);
+//        client.setConnectTimeout(4*60*1000);
+        client.setConnectTimeout(40*1000);
+        client.setMaxConnections(600);
+        client.setURLEncodingEnabled(false);
+
+    }
+
+    public AsyncHttpClient getClient() {
+        return client;
+    }
+
+    public void setClient(AsyncHttpClient client) {
+        this.client = client;
     }
 
     public String getToken() {

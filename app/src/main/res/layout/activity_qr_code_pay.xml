@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F1F1"
+    android:background="@color/gray"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/bg"
         android:orientation="horizontal">
 
@@ -38,12 +38,21 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:background="@null"
             android:hint="请输入支付金额"
             android:inputType="numberDecimal" />
 
 
     </LinearLayout>
 
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="温馨提示：二维码支付只能使用余额支付"
+        android:layout_marginBottom="10dp"
+        android:textSize="12sp"/>
 
     <TextView
 

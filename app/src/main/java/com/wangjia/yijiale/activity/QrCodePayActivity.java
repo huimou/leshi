@@ -36,6 +36,7 @@ public class QrCodePayActivity extends AppCompatActivity implements QrCodeActivi
     TextView submitPayTv;
     private Intent i;
     private QrCodeActivityPresenterImpl qrCodeActivityPresenterImpl;
+    private String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,6 @@ public class QrCodePayActivity extends AppCompatActivity implements QrCodeActivi
     }
 
     public void initData() {
-
 
     }
 

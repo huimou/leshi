@@ -215,6 +215,7 @@ public class ZhifuActivity extends AppCompatActivity implements RegisterActivity
     public void shiwuOrder(ZhifuShiWuBean getInfo) {
         //实物支付
         this.getInfo = getInfo;
+
     }
 
     @Override

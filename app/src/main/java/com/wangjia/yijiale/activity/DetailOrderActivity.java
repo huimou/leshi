@@ -14,6 +14,7 @@ import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.adapter.GoodsDetailsAdapter;
 import com.wangjia.yijiale.entity.BaseBean;
+import com.wangjia.yijiale.entity.CommentStoreBean;
 import com.wangjia.yijiale.entity.OrderDetails;
 import com.wangjia.yijiale.iview.OrderDetailsActivityView;
 import com.wangjia.yijiale.presenter.DetailsOrderDetailsPresenter;
@@ -129,6 +130,11 @@ public class DetailOrderActivity extends AppCompatActivity implements OrderDetai
 
     @Override
     public void commentOrder(BaseBean getInfo) {
+
+    }
+
+    @Override
+    public void get_member_evaluate(CommentStoreBean bean) {
 
     }
 

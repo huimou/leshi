@@ -9,6 +9,7 @@ package com.wangjia.yijiale.presenter;
 public interface DetailsOrderDetailsPresenter extends BasePresenter {
 
     void getData(String token, int order_id);
+    void get_member_evaluate(String token, int order_id);
     void commentOrder(String token, int order_id, int store_desccredit, int store_servicecredit, int store_deliverycredit, int goods);
 
     }

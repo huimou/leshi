@@ -105,19 +105,19 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
                 if (bean.getOrder_state() == 1) {
                     //已取消，就是只有删除订单
                     myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_delete");
-                }else if(bean.getOrder_state() == 10) {
+                } else if (bean.getOrder_state() == 10) {
                     //待付款，有取消按钮，和 去付款按钮
                     // TODO: 2017/4/23
-                    myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay","0");
+                    myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay", "0");
 //                    myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
-                }else if(bean.getOrder_state() == 20) {
+                } else if (bean.getOrder_state() == 20) {
                     //待发货，只有取消按钮
                     // TODO: 2017/4/23
-                }else if(bean.getOrder_state() == 30) {
+                } else if (bean.getOrder_state() == 30) {
                     //待收货，只有确认收货按钮
                     // TODO: 2017/4/23
                     myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
-                }else if(bean.getOrder_state() == 40) {
+                } else if (bean.getOrder_state() == 40) {
                     //已收货，只有删除订单按钮 和  评价按钮
                     // TODO: 2017/4/23
 //                    myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_receive");
@@ -130,8 +130,8 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
             public void onCommentClick(View view, int postion, MyOrder.DatasBean bean) {
                 //评论商家
                 Intent intent = new Intent(getActivity(), CommentStoreActivity.class);
-                intent.putExtra("order_id",bean.getOrder_id());
-                intent.putExtra("order_name",bean.getStore_name());
+                intent.putExtra("order_id", bean.getOrder_id());
+                intent.putExtra("order_name", bean.getStore_name());
                 startActivity(intent);
             }
 
@@ -178,9 +178,9 @@ public class OrderAllFragment extends Fragment implements MyOrderActivityView {
 //        }
 
         if (model.getCode() == Constants.RESPONSE_SUCCESS) {
-            if (model.getDatas() != null) {
-                adapter.setData(model);
-            }
+
+            adapter.setData(model);
+
         }
     }
 

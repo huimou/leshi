@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.wangjia.yijiale.api.BaseNoCacheRequest;
 import com.wangjia.yijiale.entity.BaseBean;
+import com.wangjia.yijiale.entity.CommentStoreBean;
 import com.wangjia.yijiale.entity.OrderDetails;
 import com.wangjia.yijiale.iview.OrderDetailsActivityView;
 import com.wangjia.yijiale.presenter.DetailsOrderDetailsPresenter;
@@ -88,6 +89,37 @@ public class OrderActivityDetailsImpl extends BasePresenterImpl implements Detai
                     public void onNext(BaseBean bean) {
                         orderDetailsActivityView.hidProgressDialog();
                         orderDetailsActivityView.commentOrder(bean);
+                        L.i("评价订单:",new Gson().toJson(bean));
+                    }
+                });
+        addSubscription(s);
+    }
+
+
+    //实物订单评价页面
+    @Override
+    public void get_member_evaluate(String token, int order_id) {
+//        myOrderActivityView.showProgressDialog();
+        Subscription s = BaseNoCacheRequest.getBaseApi().get_member_evaluate(token, order_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CommentStoreBean>() {
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        orderDetailsActivityView.hidProgressDialog();
+                        orderDetailsActivityView.showError(e.getMessage());
+                        Log.i("评价订单:", e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(CommentStoreBean bean) {
+                        orderDetailsActivityView.hidProgressDialog();
+                        orderDetailsActivityView.get_member_evaluate(bean);
                         L.i("评价订单:",new Gson().toJson(bean));
                     }
                 });

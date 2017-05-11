@@ -20,6 +20,7 @@ import com.wangjia.yijiale.entity.VipSubmitBean;
 import com.wangjia.yijiale.iview.TxActivityView;
 import com.wangjia.yijiale.presenter.TxActivityPresenter;
 import com.wangjia.yijiale.presenter.impl.TxActivityPresenterImpl;
+import com.wangjia.yijiale.utils.Constants;
 import com.wangjia.yijiale.utils.StringFunction;
 import com.wangjia.yijiale.utils.Titlebulder;
 import com.wangjia.yijiale.utils.ToastUtils;
@@ -89,7 +90,10 @@ public class TxActivity extends AppCompatActivity implements TxActivityView {
 
     @Override
     public void vipTxApply(VipSubmitBean bean) {
-
+        if (bean.getCode() == Constants.RESPONSE_SUCCESS) {
+            finish();
+        }
+        ToastUtils.showToast(TxActivity.this, bean.getMsg());
     }
 
 
@@ -119,7 +123,7 @@ public class TxActivity extends AppCompatActivity implements TxActivityView {
                     }
 
                     String replace = shengyuJineTv.getText().toString().replace("￥:", "");
-                    if (Double.parseDouble(replace)==0.00d) {
+                    if (Double.parseDouble(replace) == 0.00d) {
                         ToastUtils.showToast(TxActivity.this, "亲，你账户余额为0不能提现！");
                         return;
                     }

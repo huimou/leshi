@@ -12,12 +12,14 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
 import com.wangjia.yijiale.adapter.GoodsDetailsAdapter;
 import com.wangjia.yijiale.entity.BaseBean;
+import com.wangjia.yijiale.entity.CommentStoreBean;
 import com.wangjia.yijiale.entity.OrderDetails;
 import com.wangjia.yijiale.event.StatusBarEvent;
 import com.wangjia.yijiale.iview.OrderDetailsActivityView;
@@ -26,6 +28,7 @@ import com.wangjia.yijiale.presenter.impl.OrderActivityDetailsImpl;
 import com.wangjia.yijiale.utils.Constants;
 import com.wangjia.yijiale.utils.L;
 import com.wangjia.yijiale.utils.RxBus;
+import com.wangjia.yijiale.utils.StringFunction;
 import com.wangjia.yijiale.utils.Titlebulder;
 import com.wangjia.yijiale.utils.ToastUtils;
 import com.wangjia.yijiale.views.CustomProgress;
@@ -88,6 +91,7 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
     private static final String TAG = "DetailOrderActivity";
     private String order_name;
     private int store_desccredit = 5;
+    private List<CommentStoreBean.DatasBean.OrderGoodsBean> OrderGoodsBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,21 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
                 });
         initDatas();
 
+        mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.main_homeRadioBut) {
+                    //好评
+                    store_desccredit = 5;
+                } else if (checkedId == R.id.main_questionRadioBut) {
+                    //中评
+                    store_desccredit = 4;
+                } else if (checkedId == R.id.main_findRadioBut) {
+                    //差评
+                    store_desccredit = 3;
+                }
+            }
+        });
     }
 
     /**
@@ -115,6 +134,7 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
     private void initDatas() {
         detailsOrderDetailsPresenter = new OrderActivityDetailsImpl(this, this);
         detailsOrderDetailsPresenter.getData(YiApplication.getInstance().getToken(), order_id);
+        detailsOrderDetailsPresenter.get_member_evaluate(YiApplication.getInstance().getToken(), order_id);
     }
 
     @Override
@@ -127,22 +147,6 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
 
             adapter = new GoodsDetailsAdapter(this, order_goods);
             rlView.setAdapter(adapter);
-
-            mainRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if (checkedId == R.id.main_homeRadioBut) {
-                        //好评
-                        store_desccredit = 5;
-                    } else if (checkedId == R.id.main_questionRadioBut) {
-                        //中评
-                        store_desccredit = 4;
-                    } else if (checkedId == R.id.main_findRadioBut) {
-                        //差评
-                        store_desccredit = 3;
-                    }
-                }
-            });
         }
     }
 
@@ -153,6 +157,11 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
             ToastUtils.showToast(CommentStoreActivity.this, getInfo.getMsg());
             finish();
         }
+    }
+
+    @Override
+    public void get_member_evaluate(CommentStoreBean commentStoreBean) {
+        OrderGoodsBeanList = commentStoreBean.getDatas().getOrder_goods();
     }
 
     @OnClick({R.id.chaping_liyou_tv})
@@ -179,17 +188,30 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
         jsonObject.put("store_desccredit", store_desccredit);
         jsonObject.put("store_servicecredit", store_desccredit);
         jsonObject.put("store_deliverycredit", store_desccredit);
-        jsonObject.put("goods_scores", store_desccredit);
-        com.alibaba.fastjson.JSONObject jsonObject_one = new com.alibaba.fastjson.JSONObject();
-        jsonObject_one.put("id", 1);
-        jsonObject_one.put("comment", chapingLiyouEt.getText().toString());
-        jsonObject.put("goods_comments", jsonObject_one);
+        String hi = "";
+        for (CommentStoreBean.DatasBean.OrderGoodsBean orderGoodsBean : OrderGoodsBeanList) {
+            hi += orderGoodsBean.getRec_id() + "," + store_desccredit + "|";
+        }
+        if (StringFunction.isNotNull(hi)) {
+            jsonObject.put("goods_scores", hi.substring(0, hi.length() - 1));
+        }
 
-        YiApplication.getInstance().getClient().post(this, "", new StringEntity(jsonObject.toString(), "utf-8"), "application/json", new AsyncHttpResponseHandler() {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < OrderGoodsBeanList.size(); i++) {
+            com.alibaba.fastjson.JSONObject jsonObject_ones = new com.alibaba.fastjson.JSONObject();
+            jsonObject_ones.put("id", OrderGoodsBeanList.get(i).getRec_id());
+            jsonObject_ones.put("coment", chapingLiyouEt.getText().toString());
+            jsonArray.add(jsonObject_ones);
+        }
+        jsonObject.put("goods_comments", jsonArray);
+
+        L.e("json",jsonObject.toString());
+        YiApplication.getInstance().getClient().post(this, "http://cs.j.cqxueao.cn/mobileapp/index.php?act=member_evaluate&op=save",
+                new StringEntity(jsonObject.toString(), "utf-8"), "application/json", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
-                ToastUtils.showToast(CommentStoreActivity.this,  "评论成功！");
+                ToastUtils.showToast(CommentStoreActivity.this, "评论成功！");
                 finish();
             }
 

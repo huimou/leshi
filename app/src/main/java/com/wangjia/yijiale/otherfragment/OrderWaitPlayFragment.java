@@ -129,9 +129,8 @@ public class OrderWaitPlayFragment extends Fragment implements MyOrderActivityVi
     @Override
     public void getData(MyOrder model) {
         if (model.getCode()== Constants.RESPONSE_SUCCESS) {
-            if (model.getDatas() != null) {
                 adapter.setData(model);
-            }
+
         }
     }
 

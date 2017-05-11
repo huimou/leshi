@@ -107,14 +107,14 @@ public class OrderWaitEvaluteFragment extends Fragment implements MyOrderActivit
                     public void call(StatusBarEvent statusBarEvent) {
                         if (statusBarEvent.getName().equals("Update_data")) {
                             //更新数据
-                            myOrderActivityPresenter.getData(YiApplication.getInstance().getToken(),30, 1);
+                            myOrderActivityPresenter.getData(YiApplication.getInstance().getToken(), 30, 1);
                         }
                     }
                 });
     }
 
     public void initView() {
-        myOrderActivityPresenter.getData(YiApplication.getInstance().getToken(),30, 1);
+        myOrderActivityPresenter.getData(YiApplication.getInstance().getToken(), 30, 1);
     }
 
     @Override
@@ -127,20 +127,18 @@ public class OrderWaitEvaluteFragment extends Fragment implements MyOrderActivit
 
     @Override
     public void getData(MyOrder model) {
-        if (model.getCode()== Constants.RESPONSE_SUCCESS) {
-            if (model.getDatas() != null) {
-                adapter.setData(model);
-            }
+        if (model.getCode() == Constants.RESPONSE_SUCCESS) {
+            adapter.setData(model);
         }
     }
 
     @Override
     public void orderOperte(MyOrder getInfo) {
-        if(getInfo.getCode()==Constants.RESPONSE_SUCCESS) {
+        if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
             RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
-        }else{
-            ToastUtils.showToast(getActivity(),getInfo.getMsg());
+            myOrderActivityPresenter.getData(YiApplication.getInstance().getToken(), 30, 1);
         }
+        ToastUtils.showToast(getActivity(), getInfo.getMsg());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.wangjia.yijiale.iview;
 
 
 import com.wangjia.yijiale.entity.BaseBean;
+import com.wangjia.yijiale.entity.CommentStoreBean;
 import com.wangjia.yijiale.entity.OrderDetails;
 
 /**
@@ -11,4 +12,6 @@ public interface OrderDetailsActivityView extends BaseView {
     void getData(OrderDetails model);
 
     void commentOrder(BaseBean getInfo);
+
+    void get_member_evaluate(CommentStoreBean bean);
 }

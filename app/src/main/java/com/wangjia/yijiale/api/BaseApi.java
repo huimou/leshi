@@ -12,6 +12,7 @@ import com.wangjia.yijiale.entity.Classify;
 import com.wangjia.yijiale.entity.CodeBean;
 import com.wangjia.yijiale.entity.CollectionList;
 import com.wangjia.yijiale.entity.CommentListBean;
+import com.wangjia.yijiale.entity.CommentStoreBean;
 import com.wangjia.yijiale.entity.GoodsDetailInfo;
 import com.wangjia.yijiale.entity.Login;
 import com.wangjia.yijiale.entity.MyOrder;
@@ -99,6 +100,12 @@ public interface BaseApi {
     Observable<BaseBean> commentOrder(@Field("token") String token, @Field("order_id") int order_id, @Field("store_desccredit") int store_desccredit,
                                       @Field("store_servicecredit") int store_servicecredit, @Field("store_deliverycredit") int store_deliverycredit,
                                       @Field("goods_comments")  int goods);
+
+
+    //实物订单评价页面
+    @FormUrlEncoded
+    @POST("mobileapp/index.php?act=member_evaluate&op=index")
+    Observable<CommentStoreBean> get_member_evaluate(@Field("token") String token, @Field("order_id") int order_id);
 
     //会员充值下单
     @FormUrlEncoded

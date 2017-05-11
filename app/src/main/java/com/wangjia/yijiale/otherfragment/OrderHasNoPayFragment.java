@@ -87,14 +87,14 @@ public class OrderHasNoPayFragment extends Fragment implements MyOrderActivityVi
             @Override
             public void onCanlePayClick(View view, int postion, MyOrder.DatasBean bean) {
                 //取消订单
-                myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(),bean.getOrder_id()+"","order_cancel");
+                myOrderActivityPresenter.orderOperte(YiApplication.getInstance().getToken(), bean.getOrder_id() + "", "order_cancel");
             }
 
             @Override
             public void onPayClick(View view, int postion, MyOrder.DatasBean bean) {
                 //付款
                 // TODO: 2017/4/23
-                myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay","0");
+                myOrderActivityPresenter.orderSubmitPlay(bean.getPay_sn(), "alipay", "0");
             }
 
             @Override
@@ -140,18 +140,17 @@ public class OrderHasNoPayFragment extends Fragment implements MyOrderActivityVi
     @Override
     public void getData(MyOrder model) {
         if (model.getCode() == Constants.RESPONSE_SUCCESS) {
-            if (model.getDatas() != null) {
-                adapter.setData(model);
-            }
+            adapter.setData(model);
+
         }
     }
 
     @Override
     public void orderOperte(MyOrder getInfo) {
-        if(getInfo.getCode()==Constants.RESPONSE_SUCCESS) {
+        if (getInfo.getCode() == Constants.RESPONSE_SUCCESS) {
             RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
-        }else{
-            ToastUtils.showToast(getActivity(),getInfo.getMsg());
+        } else {
+            ToastUtils.showToast(getActivity(), getInfo.getMsg());
         }
     }
 

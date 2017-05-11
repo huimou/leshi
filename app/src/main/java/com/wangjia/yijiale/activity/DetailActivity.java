@@ -181,8 +181,8 @@ public class DetailActivity extends AppCompatActivity implements CartCartWindow.
         tabAdapter.setOnRgsExtraCheckedChangedListener(new FragmentTabAdapter.OnRgsExtraCheckedChangedListener() {
             @Override
             public void OnRgsExtraCheckedChanged(RadioGroup radioGroup, int checkedId, int index) {
-//                L.e("Extra---- " + index + " checked!!! ");
-//                L.i(index + "");
+                L.e("Extra---- " + index + " checked!!! ");
+                L.i(index + "");
                 if (index == 0) {
                     bottom.setVisibility(View.VISIBLE);
                 } else {

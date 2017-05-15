@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 import com.wangjia.yijiale.R;
 import com.wangjia.yijiale.YiApplication;
@@ -35,6 +35,9 @@ import com.wangjia.yijiale.views.CustomProgress;
 import com.wangjia.yijiale.views.NoScrollRecycleView;
 import com.wangjia.yijiale.views.RoundAngleImageView;
 
+import org.json.JSONObject;
+
+import java.net.URLEncoder;
 import java.util.List;
 
 import butterknife.Bind;
@@ -169,8 +172,8 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
         switch (view.getId()) {
             case R.id.chaping_liyou_tv:
                 //评论、
-                upLoadLatLonToService();
-//                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(), order_id, store_desccredit, 5, 5, 5);
+//                upLoadLatLonToService();
+                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(), order_id, store_desccredit, 5, 5, 5);
                 break;
 
 
@@ -200,27 +203,78 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
         for (int i = 0; i < OrderGoodsBeanList.size(); i++) {
             com.alibaba.fastjson.JSONObject jsonObject_ones = new com.alibaba.fastjson.JSONObject();
             jsonObject_ones.put("id", OrderGoodsBeanList.get(i).getRec_id());
-            jsonObject_ones.put("coment", chapingLiyouEt.getText().toString());
+            jsonObject_ones.put("comment", chapingLiyouEt.getText().toString());
             jsonArray.add(jsonObject_ones);
         }
-        jsonObject.put("goods_comments", jsonArray);
+        jsonObject.put("goods_comments", URLEncoder.encode(jsonArray.toString()));
 
-        L.e("json",jsonObject.toString());
+        L.e("json", jsonObject.toString());
         YiApplication.getInstance().getClient().post(this, "http://cs.j.cqxueao.cn/mobileapp/index.php?act=member_evaluate&op=save",
-                new StringEntity(jsonObject.toString(), "utf-8"), "application/json", new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
-                ToastUtils.showToast(CommentStoreActivity.this, "评论成功！");
-                finish();
-            }
+                new StringEntity(jsonObject.toString(), "utf-8"), "application/json", mJsonHttpResponseHandler
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                ToastUtils.showToast(CommentStoreActivity.this, "评论失败！");
-            }
-        });
+//                new AsyncHttpResponseHandler() {
+//                    @Override
+//                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+//                        RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
+//                        L.e(responseBody.toString());
+//                        ToastUtils.showToast(CommentStoreActivity.this, "评论成功！" + responseBody.toString());
+//                        finish();
+//                    }
+//
+//                    @Override
+//                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+//                        ToastUtils.showToast(CommentStoreActivity.this, "评论失败！");
+//                    }
+//                }
+        );
     }
+
+    final JsonHttpResponseHandler mJsonHttpResponseHandler = new JsonHttpResponseHandler() {
+        @Override
+        public void onStart() {
+            super.onStart();
+
+        }
+
+        @Override
+        public void onProgress(long bytesWritten, long totalSize) {
+            super.onProgress(bytesWritten, totalSize);
+
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            super.onSuccess(statusCode, headers, response);
+            try {
+                RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
+                L.e(response.toString());
+                ToastUtils.showToast(CommentStoreActivity.this, "评论成功！" );
+                finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+
+            L.e(errorResponse.toString());
+            ToastUtils.showToast(CommentStoreActivity.this, "评论失败！" );
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            super.onFailure(statusCode, headers, responseString, throwable);
+
+        }
+    };
 
     @Override
     public void showProgressDialog() {

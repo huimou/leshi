@@ -173,7 +173,23 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
             case R.id.chaping_liyou_tv:
                 //评论、
 //                upLoadLatLonToService();
-                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(), order_id, store_desccredit, 5, 5, 5);
+                String hi = "";
+                for (CommentStoreBean.DatasBean.OrderGoodsBean orderGoodsBean : OrderGoodsBeanList) {
+                    hi += orderGoodsBean.getRec_id() + "," + store_desccredit + "|";
+                }
+                if (StringFunction.isNotNull(hi)) {
+                    hi = hi.substring(0, hi.length() - 1);
+                }
+
+                JSONArray jsonArray = new JSONArray();
+                for (int i = 0; i < OrderGoodsBeanList.size(); i++) {
+                    com.alibaba.fastjson.JSONObject jsonObject_ones = new com.alibaba.fastjson.JSONObject();
+                    jsonObject_ones.put("id", OrderGoodsBeanList.get(i).getRec_id());
+                    jsonObject_ones.put("comment", chapingLiyouEt.getText().toString());
+                    jsonArray.add(jsonObject_ones);
+                }
+//                jsonObject.put("goods_comments", URLEncoder.encode(jsonArray.toString()));
+                detailsOrderDetailsPresenter.commentOrder(YiApplication.getInstance().getToken(), order_id, store_desccredit, 5, 5, hi,URLEncoder.encode(jsonArray.toString()));
                 break;
 
 
@@ -254,7 +270,7 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
             try {
                 RxBus.getDefault().send(new StatusBarEvent("", "Update_data", 1));
                 L.e(response.toString());
-                ToastUtils.showToast(CommentStoreActivity.this, "评论成功！" );
+                ToastUtils.showToast(CommentStoreActivity.this, "评论成功！");
                 finish();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -266,7 +282,7 @@ public class CommentStoreActivity extends AppCompatActivity implements OrderDeta
             super.onFailure(statusCode, headers, throwable, errorResponse);
 
             L.e(errorResponse.toString());
-            ToastUtils.showToast(CommentStoreActivity.this, "评论失败！" );
+            ToastUtils.showToast(CommentStoreActivity.this, "评论失败！");
         }
 
         @Override

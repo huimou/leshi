@@ -276,6 +276,7 @@ public class MyFragment extends Fragment implements TxActivityView {
         }
     }
 
+
     @Override
     public void vipTxApply(VipSubmitBean bean) {
 

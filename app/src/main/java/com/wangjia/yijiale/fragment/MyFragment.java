@@ -25,6 +25,10 @@ import com.wangjia.yijiale.activity.StoreInActivity;
 import com.wangjia.yijiale.activity.TxActivity;
 import com.wangjia.yijiale.activity.UpdateZlActivity;
 import com.wangjia.yijiale.address.AddressManageActivity;
+import com.wangjia.yijiale.entity.ShowVipBean;
+import com.wangjia.yijiale.entity.VipSubmitBean;
+import com.wangjia.yijiale.iview.TxActivityView;
+import com.wangjia.yijiale.presenter.impl.TxActivityPresenterImpl;
 import com.wangjia.yijiale.pullzoom.PullToZoomScrollViewEx;
 import com.wangjia.yijiale.utils.CircleImageView;
 import com.wangjia.yijiale.utils.Constants;
@@ -39,7 +43,7 @@ import butterknife.OnClick;
  * Created by kevin on 2016/10/26
  * 个人中心
  */
-public class MyFragment extends Fragment {
+public class MyFragment extends Fragment implements TxActivityView {
 
     @Bind(R.id.scroll_view)
     PullToZoomScrollViewEx scrollView;
@@ -49,7 +53,8 @@ public class MyFragment extends Fragment {
     private ImageView zoom;
     private View headView;
     private CircleImageView headViewView;
-    private TextView user_name_tv;
+    private TextView user_name_tv, user_money_tv;
+    private TxActivityPresenterImpl txActivityPresenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,10 @@ public class MyFragment extends Fragment {
         int mScreenWidth = localDisplayMetrics.widthPixels;
         LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
         scrollView.setHeaderLayoutParams(localObject);
+
+        txActivityPresenter = new TxActivityPresenterImpl(this, getActivity());
+        txActivityPresenter.showVip();
+
     }
 
     public void initView() {
@@ -100,7 +109,7 @@ public class MyFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), QrCodeActivity.class);
-                    intent.putExtra("store_id",store_id);
+                    intent.putExtra("store_id", store_id);
                     startActivity(intent);
                 }
             });
@@ -204,6 +213,7 @@ public class MyFragment extends Fragment {
         headView = LayoutInflater.from(getActivity()).inflate(R.layout.profile_head_view, null, false);
         headViewView = (CircleImageView) headView.findViewById(R.id.iv_user_head);
         user_name_tv = (TextView) headView.findViewById(R.id.user_name_tv);
+        user_money_tv = (TextView) headView.findViewById(R.id.user_money_tv);
 
         View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.profile_zoom_view, null, false);
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.profile_content_view, null, false);
@@ -254,5 +264,35 @@ public class MyFragment extends Fragment {
         } else {
             user_name_tv.setText("未登录");
         }
+    }
+
+    @Override
+    public void showVip(ShowVipBean getInfo) {
+        if (StringFunction.isNotNull(getInfo.getDatas()) && StringFunction.isNotNull(getInfo.getDatas().getMember_info()) &&
+                StringFunction.isNotNull(getInfo.getDatas().getMember_info().getAvailable_predeposit())) {
+            if (StringFunction.isNotNull(SPUtils.get(getActivity(), Constants.TOKEN, "").toString())) {
+                user_money_tv.setText("(账户余额:￥" + getInfo.getDatas().getMember_info().getAvailable_predeposit() + ")");
+            }
+        }
+    }
+
+    @Override
+    public void vipTxApply(VipSubmitBean bean) {
+
+    }
+
+    @Override
+    public void showProgressDialog() {
+
+    }
+
+    @Override
+    public void hidProgressDialog() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
     }
 }

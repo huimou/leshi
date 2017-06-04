@@ -167,7 +167,6 @@
                         android:background="@null"
                         android:hint="请输入银行卡号"
                         android:inputType="number"
-                        android:maxLength="18"
                         android:textColor="@color/fo_black"
                         android:textSize="@dimen/text_size_small" />
 

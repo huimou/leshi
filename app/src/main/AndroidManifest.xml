@@ -329,7 +329,7 @@
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService"></service>
 
-        <!-- 百度地图 mapid cbxfnHd51GeyfsUof9KR66IYl2UnCClF //key:开发者申请的key -->
+        <!-- 百度地图 mapid cbxfnHd51GeyfsUof9KR66IYl2UnCClF  //key:开发者申请的key -->
         <!-- <meta-data
              android:name="com.baidu.lbsapi.API_KEY"
              android:value="Mn4ZALbxqZSVNIOv2QU0G0IwqEhDCG1V" />
